@@ -1,0 +1,60 @@
+.navbar {
+  height: 60px;
+  border-bottom: 1px solid #ccc;
+  margin-bottom:0px
+}
+.sidebar {
+  padding-left:25px;
+  width: 230px;
+  border-right: 1px solid #ccc;
+  height: 100%;
+  float: left;
+  font-family:proxima-nova;
+}
+.logo-img {
+  width: 28px;
+  display: inline-block;
+  float: left;
+  padding-top: 11px;
+  margin-right: 2px;
+}
+
+.logo-text {
+  font-family:proxima-nova;
+  font-size: 25px;
+  font-weight: bold;
+  color: white;
+  line-height: 52px;
+  text-decoration:none
+}
+
+.app-logo-img {
+  width: 20px;
+  display: inline-block;
+  float: left;
+  padding-top: 14px;
+  margin-right: 2px;
+}
+
+.app-logo-text {
+  font-family:proxima-nova;
+  font-size: 19px;
+  font-weight: bold;
+  color: white;
+  line-height: 52px;
+  text-decoration: none;
+}
+
+.search-btn {
+  float: right;
+  color: #aaa;
+  margin-right: 5px;
+  margin-top: 5px;
+  border: 1px solid #aaa;
+  border-radius: 50px;
+  height: 35px;
+  width: 35px;
+  text-align: center;
+  padding-top: 6px;
+  cursor:pointer;
+}

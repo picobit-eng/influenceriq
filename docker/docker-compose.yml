@@ -1,0 +1,20 @@
+web:
+  build: web/
+  env_file: /tmp/signaliq.env
+  ports:
+    - "80:3000"
+  restart: always
+  links:
+    - rethinkdb_tunnel
+rethinkdb_tunnel:
+  build: rethinkdb_tunnel/
+  env_file: /tmp/signaliq.env
+  restart: always
+  ports:
+    - "28015"
+splash:
+  image: scrapinghub/splash
+  env_file: /tmp/signaliq.env
+  restart: always
+  ports:
+    - "8950:8050"

@@ -4,7 +4,7 @@
 # - Docker Actions that change rarely should be combined to reduce layers,
 #     which speeds up deploy times (e.g. setting ENV VARS)
 
-FROM picobit/signaliq-base:latest
+FROM picobit/influenceriq-base:latest
 
 # ENV VARS are loaded in a single line to reduce number of images
 ENV WEB_PORT=3000

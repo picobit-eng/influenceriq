@@ -12,6 +12,7 @@ var _ = require('underscore')
 var rd = require("./connection").redis()
 var r = require("./connection").rethinkdb()
 
+//
 app.use(express.static('client'));
 
 app.get('/', function (req, res) {

@@ -42,10 +42,10 @@ var Vine = {
           qry.run().then(function(res) {
             console.log(res)
             })
-          })
           */
+          })
       })
-        )
+    )
     })
   },
 
@@ -135,6 +135,6 @@ var Vine = {
   },
 }
 
-//Vine.download()
+Vine.download()
 
 module.exports = Vine

@@ -105,10 +105,12 @@ var Instagram = {
             console.log(res)
           })
 
+          /*
           qry = r.table("instagram_profiles").getAll(this.uri.href, {index: "link"}).update(profile)
           qry.run().then(function(res) {
             console.log(res)
           })
+          */
         })
       })
       )

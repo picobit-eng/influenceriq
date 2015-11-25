@@ -49,16 +49,16 @@ app.get('/network/:network/:page', function (req, res) {
 /*
 */
 
-Vine.discover()
+//Vine.discover()
 Vine.download()
 
-Pinterest.discover()
+//Pinterest.discover()
 Pinterest.download()
 
-Twitter.discover()
+//Twitter.discover()
 Twitter.download()
 
-Instagram.discover()
+//Instagram.discover()
 Instagram.download()
 
 var CronJob = require('cron').CronJob;

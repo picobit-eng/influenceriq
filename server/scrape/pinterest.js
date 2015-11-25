@@ -32,11 +32,15 @@ var Pinterest = {
           console.log(this.uri.href)
           profile = _this.parseProfile(html)
           profile.createdAt = moment().unix()
-          r.table("pinterest_profile_stats").insert(profile).run()
+          r.table("pinterest_profile_stats").insert(profile).run().then(function(data) {
+            console.log(data)
+          })
+          /*
           qry = r.table("pinterest_profiles").getAll(this.uri.href, {index: "link"}).update(profile)
           qry.run().then(function(res) {
             console.log(res)
           })
+          */
         })
       })
        )

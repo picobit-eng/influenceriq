@@ -31,11 +31,15 @@ var Twitter = {
           console.log(this.uri.href)
           profile = _this.parseProfile(html)
           profile.createdAt = moment().unix()
-          r.table("twitter_profile_stats").insert(profile).run()
+          r.table("twitter_profile_stats").insert(profile).run().then(function(data) {
+            console.log(data)
+          })
+          /*
           qry = r.table("twitter_profiles").getAll(this.uri.href, {index: "link"}).update(profile)
           qry.run().then(function(res) {
             console.log(res)
           })
+          */
         })
       })
        )
@@ -114,6 +118,6 @@ var Twitter = {
   },
 }
 
-//Twitter.download()
+Twitter.download()
 
 module.exports = Twitter

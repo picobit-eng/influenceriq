@@ -65,7 +65,7 @@ var Instagram = {
           profiles = Google.results(html)
           //console.log(profiles)
           profiles = _.map(profiles, function(profile){
-            profile.link = profile.link.split("%3F")[0]
+            profile.link = profile.link.split("/%3F")[0]
             profile.createdAt = moment().unix()
             link = profile.link
             if(link.indexOf(".com/explore/") == -1 && link.indexOf("/p/") ==  -1 && link.indexOf("/help/") == -1)
@@ -91,11 +91,12 @@ var Instagram = {
       _.map(_.shuffle(profiles), rateLimit(100, 1000, function(profile) { 
         link = profile.link
         if(link.indexOf(".com/explore/") != -1 || link.indexOf("/p/") != -1 || link.indexOf("/help/") != -1) { return }
-        console.log(profile.link)
-        request.get(profile.link, function(err, res, html) {
+        //console.log(profile.link.split("/%3F")[0])
+        request.get(profile.link.split("/%3F")[0], function(err, res, html) {
           if(err) { return }
           console.log(err)
-          console.log(res.statusCode)
+          //console.log(res.statusCode)
+          console.log(res.statusCode + " " + profile.link)
           if(res.statusCode != 200)  { return } 
           console.log(this.uri.href)
           profile = _this.parseProfile(html)
@@ -103,6 +104,7 @@ var Instagram = {
           r.table("instagram_profile_stats").insert(profile).run().then(function(res) {
             console.log(res)
           })
+
           qry = r.table("instagram_profiles").getAll(this.uri.href, {index: "link"}).update(profile)
           qry.run().then(function(res) {
             console.log(res)
@@ -150,7 +152,7 @@ var Instagram = {
         return 
       }
       console.log(err)
-      console.log(res.statusCode)
+      console.log(res.statusCode + " " + profile.link)
       if(res.statusCode != 200)  { 
         //callback();
         return 
@@ -235,7 +237,7 @@ var Instagram = {
   }
 }
 
-Instagram.discover()
+//Instagram.discover()
 //Instagram.batchDownload()
-//Instagram.download()
+Instagram.download()
 module.exports = Instagram

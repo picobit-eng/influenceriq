@@ -19,7 +19,7 @@ var Twitter = {
       //var i = _.random(0, Math.ceil(profiles.length/1000))
       //i = 10
       //profiles = profiles.slice(1000*i,1000*(i+1))
-      _.map(_.shuffle(profiles), rateLimit(100, 1000, function(profile) { 
+      _.map(_.shuffle(profiles), rateLimit(10, 1000, function(profile) { 
         link = profile.link
         if(link.indexOf(".com/explore/") != -1 || link.indexOf("/p/") != -1 || link.indexOf("/help/") != -1) { return }
         console.log(profile.link)
@@ -113,5 +113,7 @@ var Twitter = {
       )
   },
 }
+
+//Twitter.download()
 
 module.exports = Twitter

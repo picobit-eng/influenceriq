@@ -131,4 +131,6 @@ var Vine = {
   },
 }
 
+//Vine.download()
+
 module.exports = Vine

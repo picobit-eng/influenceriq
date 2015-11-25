@@ -20,11 +20,11 @@ var Pinterest = {
       //i = 10
       //profiles = profiles.slice(50*i,50*(i+1))
      // profiles = profiles.slice(1, 5)
-      _.map(_.shuffle(profiles), rateLimit(20, 1000, function(profile) { 
+      _.map(_.shuffle(profiles), rateLimit(1, 1000, function(profile) { 
         link = profile.link
         if(link.indexOf(".com/explore/") != -1 || link.indexOf("/p/") != -1 || link.indexOf("/help/") != -1) { return }
         console.log(profile.link)
-        request.get(profile.link, function(err, res, html) {
+        request.get(Crawlera.url(profile.link), function(err, res, html) {
           console.log(err)
           if(err) { return }
           console.log(res.statusCode)
@@ -114,5 +114,7 @@ var Pinterest = {
       )
   },
 }
+
+//Pinterest.download()
 
 module.exports = Pinterest

@@ -46,19 +46,23 @@ app.get('/network/:network/:page', function (req, res) {
 //Twitter.discover()
 //Twitter.download()
 //ChangeFeeds.start()
-  Vine.discover()
-  Vine.download()
+/*
+*/
 
-  Pinterest.discover()
-  Pinterest.download()
+Vine.discover()
+Vine.download()
 
-  Twitter.discover()
-  Twitter.download()
+Pinterest.discover()
+Pinterest.download()
 
-  Instagram.discover()
-  Instagram.download()
+Twitter.discover()
+Twitter.download()
+
+Instagram.discover()
+Instagram.download()
+
 var CronJob = require('cron').CronJob;
-new CronJob('1 * * * * *', function() {
+new CronJob('* 59 * * * *', function() {
   Vine.discover()
   Vine.download()
 

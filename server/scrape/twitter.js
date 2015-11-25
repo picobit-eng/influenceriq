@@ -1,4 +1,5 @@
 var request = require('request');
+var rateLimit = require('function-rate-limit');
 var moment = require("moment")
 var _ = require('underscore')
 var rd = require("./../connection").redis()
@@ -9,15 +10,16 @@ format.extend(String.prototype)
 var cheerio = require("cheerio");
 var Crawlera = require("./crawlera")
 var Google = require("./google")
+discoverRate = 5
 
 var Twitter = {
   download: function() {
     var _this = this;
     r.table("twitter_profiles").run().then(function(profiles) {
-      var i = _.random(0, Math.ceil(profiles.length/1000))
+      //var i = _.random(0, Math.ceil(profiles.length/1000))
       //i = 10
-      profiles = profiles.slice(1000*i,1000*(i+1))
-      _.map(profiles, function(profile) { 
+      //profiles = profiles.slice(1000*i,1000*(i+1))
+      _.map(_.shuffle(profiles), rateLimit(100, 1000, function(profile) { 
         link = profile.link
         if(link.indexOf(".com/explore/") != -1 || link.indexOf("/p/") != -1 || link.indexOf("/help/") != -1) { return }
         console.log(profile.link)
@@ -35,6 +37,7 @@ var Twitter = {
           })
         })
       })
+       )
     })
   },
 
@@ -82,10 +85,10 @@ var Twitter = {
 
     var _this = this;
 
-    var i = _.random(0, Math.ceil(start_urls.length/1000))
-    start_urls = start_urls.slice(1000*i,1000*(i+1))
+    //var i = _.random(0, Math.ceil(start_urls.length/1000))
+    //start_urls = start_urls.slice(1000*i,1000*(i+1))
 
-    _.map(start_urls, function(url) { 
+    _.map(_.shuffle(start_urls), rateLimit(discoverRate, 1000, function(url) { 
         request.get(url, function(err, res, html) {
           console.log(err)
           if(err) { return }
@@ -106,6 +109,7 @@ var Twitter = {
           })
         })
     })
+      )
   },
 }
 

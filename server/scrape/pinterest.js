@@ -1,4 +1,5 @@
 var request = require('request');
+var rateLimit = require('function-rate-limit');
 var moment = require("moment")
 var _ = require('underscore')
 var rd = require("./../connection").redis()
@@ -9,16 +10,17 @@ format.extend(String.prototype)
 var cheerio = require("cheerio");
 var Crawlera = require("./crawlera")
 var Google = require("./google")
+discoverRate = 5
 
 var Pinterest = {
   download: function() {
     var _this = this;
     r.table("pinterest_profiles").run().then(function(profiles) {
-      var i = _.random(0, Math.ceil(profiles.length/50))
+      //var i = _.random(0, Math.ceil(profiles.length/50))
       //i = 10
-      profiles = profiles.slice(50*i,50*(i+1))
+      //profiles = profiles.slice(50*i,50*(i+1))
      // profiles = profiles.slice(1, 5)
-      _.map(profiles, function(profile) { 
+      _.map(_.shuffle(profiles), rateLimit(20, 1000, function(profile) { 
         link = profile.link
         if(link.indexOf(".com/explore/") != -1 || link.indexOf("/p/") != -1 || link.indexOf("/help/") != -1) { return }
         console.log(profile.link)
@@ -36,6 +38,7 @@ var Pinterest = {
           })
         })
       })
+       )
     })
   },
 
@@ -83,16 +86,16 @@ var Pinterest = {
 
     var _this = this;
 
-    var i = _.random(0, Math.ceil(start_urls.length/1000))
-    start_urls = start_urls.slice(1000*i,1000*(i+1))
+    //var i = _.random(0, Math.ceil(start_urls.length/1000))
+    //start_urls = start_urls.slice(1000*i,1000*(i+1))
 
-    _.map(start_urls, function(url) { 
+    _.map(_.shuffle(start_urls), rateLimit(discoverRate, 1000, function(url) { 
         request.get(url, function(err, res, html) {
           console.log(err)
           if(err) { return }
           console.log(res.statusCode)
           profiles = Google.results(html)
-          profiles = _.map(profiles, function(profile){
+          profiles = _.map(profiles, function(profile) {
             if(!profile) { return {} }
             profile.link = profile.link.split("%3F")[0]
             profile.createdAt = moment().unix()
@@ -107,6 +110,7 @@ var Pinterest = {
           })
         })
     })
+      )
   },
 }
 

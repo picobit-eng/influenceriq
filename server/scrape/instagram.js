@@ -1,6 +1,8 @@
 var cheerio = require("cheerio");
+var async = require("async")
 var request = require("request");
 var querystring = require("querystring")
+var rateLimit = require('function-rate-limit');
 var format = require('string-format')
 var moment = require('moment')
 var Crawlera = require('./crawlera')
@@ -9,6 +11,8 @@ format.extend(String.prototype)
 var _ = require('underscore')
 var rd = require("./../connection").redis()
 var r = require("./../connection").rethinkdb()
+
+discoverRate = 5
 
 var Instagram = {
   photoParse: function(html) {
@@ -53,7 +57,7 @@ var Instagram = {
     var i = _.random(0, Math.ceil(start_urls.length/1000))
     start_urls = start_urls.slice(1000*i,1000*(i+1))
 
-    _.map(start_urls, function(url) { 
+    _.map(_.shuffle(start_urls), rateLimit(discoverRate, 1000, function(url) { 
         request.get(url, function(err, res, html) {
           console.log(err)
           if(err) { return }
@@ -70,37 +74,97 @@ var Instagram = {
           profiles = _.compact(profiles)
           r.table("instagram_profiles").insert(profiles).run()
         })
-    })
+      })
+    )
   },
 
   download: function() {
     console.log("download")
     var _this = this;
     r.table("instagram_profiles").run().then(function(profiles) {
-      var i = _.random(0, Math.ceil(profiles.length/1000))
-      i = 10
-      profiles = profiles.slice(1000*i,1000*(i+1))
-      _.map(profiles, function(profile) { 
+      //var i = _.random(0, Math.ceil(profiles.length/1000))
+      //i = 10
+      //profiles = profiles.slice(1000*i,1000*(i+1))
+      _.map(_.shuffle(profiles), rateLimit(100, 1000, function(profile) { 
         link = profile.link
         if(link.indexOf(".com/explore/") != -1 || link.indexOf("/p/") != -1 || link.indexOf("/help/") != -1) { return }
         console.log(profile.link)
         request.get(profile.link, function(err, res, html) {
+          if(err) { return }
           console.log(err)
           console.log(res.statusCode)
           if(res.statusCode != 200)  { return } 
           console.log(this.uri.href)
           profile = _this.parseProfile(html)
           profile.createdAt = moment().unix()
-          r.table("instagram_profile_stats").insert(profile).run()
+          r.table("instagram_profile_stats").insert(profile).run().then(function(res) {
+            console.log(res)
+          })
           qry = r.table("instagram_profiles").getAll(this.uri.href, {index: "link"}).update(profile)
           qry.run().then(function(res) {
             console.log(res)
           })
         })
       })
+      )
     })
-
   },
+
+  batchDownload: function() {
+    var _this = this;
+    profileParse = this.profileParse
+    var q = async.queue(profileParse, 10);
+
+
+    // assign a callback
+    q.drain = function() {
+        console.log('all items have been processed');
+    }
+
+    r.table("instagram_profiles").limit(30).run().then(function(profiles) {
+    //r.table("instagram_profiles").run().then(function(profiles) {
+      profiles = _.map(profiles, function(e) { 
+        e.parseProfile = _this.parseProfile
+        return e  
+      })
+
+      q.push(profiles, function (err) {
+          console.log('finished processing item');
+      });
+    })
+  },
+
+  profileParse: function(profile, callback) { 
+    var _this = this
+    parseProfile = profile.parseProfile
+    link = profile.link
+    console.log(link)
+    if(link.indexOf(".com/explore/") != -1 || link.indexOf("/p/") != -1 || link.indexOf("/help/") != -1) { return }
+    console.log(profile.link)
+    request.get(profile.link, function(err, res, html) {
+      if(err) { 
+        //callback();
+        return 
+      }
+      console.log(err)
+      console.log(res.statusCode)
+      if(res.statusCode != 200)  { 
+        //callback();
+        return 
+      } 
+      console.log(this.uri.href)
+      //profile = _this.parseProfile(html)
+      profile = parseProfile(html)
+      profile.createdAt = moment().unix()
+      r.table("instagram_profile_stats").insert(profile).run()
+      qry = r.table("instagram_profiles").getAll(this.uri.href, {index: "link"}).update(profile)
+      qry.run().then(function(res) {
+        console.log(res)
+        //callback();
+      })
+    })
+  },
+
 
   parseLinks: function() {
 
@@ -168,4 +232,7 @@ var Instagram = {
   }
 }
 
+//Instagram.discover()
+//Instagram.batchDownload()
+//Instagram.download()
 module.exports = Instagram

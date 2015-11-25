@@ -21,7 +21,7 @@ var Vine = {
       //i = 10
       //profiles = profiles.slice(1000*i,1000*(i+1))
       //console.log(profiles)
-      _.map(_.shuffle(profiles), rateLimit(100, 1000, function(profile) { 
+      _.map(_.shuffle(profiles), rateLimit(50, 1000, function(profile) { 
         link = profile.link
         if(!link) { return {} }
         if(link.indexOf(".com/explore/") != -1 || link.indexOf("/p/") != -1 || link.indexOf("/help/") != -1) { return }

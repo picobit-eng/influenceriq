@@ -25,6 +25,7 @@ var Twitter = {
         console.log(profile.link)
         request.get(profile.link, function(err, res, html) {
           console.log(err)
+          if(err) { return }
           console.log(res.statusCode)
           if(res.statusCode != 200)  { return } 
           console.log(this.uri.href)
@@ -104,7 +105,7 @@ var Twitter = {
           })
           profiles = _.compact(profiles)
           console.log(profiles)
-          r.table("twitter_profiles").insert(profiles).run().then(function(res) {
+          r.table("twitter_profiles").insert(_.compact(profiles)).run().then(function(res) {
             console.log(res)
           })
         })

@@ -28,6 +28,7 @@ var Vine = {
         console.log(profile.link)
         request.get(profile.link, function(err, res, html) {
           console.log(err)
+          if(err) { return }
           console.log(res.statusCode)
           if(res.statusCode != 200)  { return } 
           console.log(this.uri.href)
@@ -120,7 +121,7 @@ var Vine = {
           console.log("PROFILES")
           console.log(profiles.length)
           console.log("PROFILES")
-          r.table("vine_profiles").insert(profiles).run().then(function(res, err) {
+          r.table("vine_profiles").insert(_.compact(profiles)).run().then(function(res, err) {
             console.log(res)
             console.log(err)
           })

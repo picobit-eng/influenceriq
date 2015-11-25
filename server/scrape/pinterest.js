@@ -26,6 +26,7 @@ var Pinterest = {
         console.log(profile.link)
         request.get(profile.link, function(err, res, html) {
           console.log(err)
+          if(err) { return }
           console.log(res.statusCode)
           if(res.statusCode != 200)  { return } 
           console.log(this.uri.href)
@@ -105,7 +106,7 @@ var Pinterest = {
           })
           //console.log(profiles)
           //profiles = _.compact(profiles)
-          r.table("pinterest_profiles").insert(profiles).run().then(function(res) {
+          r.table("pinterest_profiles").insert(_.compact(profiles)).run().then(function(res) {
             console.log(res)
           })
         })

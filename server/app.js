@@ -50,19 +50,19 @@ app.get('/network/:network/:page', function (req, res) {
 */
 
 Vine.discover()
-Vine.download()
+//Vine.download()
 
 Pinterest.discover()
-Pinterest.download()
+//Pinterest.download()
 
 Twitter.discover()
-Twitter.download()
+//Twitter.download()
 
 Instagram.discover()
-Instagram.download()
+//Instagram.download()
 
 var CronJob = require('cron').CronJob;
-new CronJob('* * * * * *', function() {
+new CronJob('* 5 * * * *', function() {
   Vine.discover()
   //Vine.download()
 
@@ -77,7 +77,7 @@ new CronJob('* * * * * *', function() {
   //Instagram.photoHack()
 }, null, true, 'America/Los_Angeles');
 
-//var CronJob = require('cron').CronJob;
+var CronJob = require('cron').CronJob;
 new CronJob('* 59 * * * *', function() {
   //Vine.discover()
   Vine.download()
@@ -92,6 +92,7 @@ new CronJob('* 59 * * * *', function() {
   Instagram.download()
   //Instagram.photoHack()
 }, null, true, 'America/Los_Angeles');
+
 
 /*
 new CronJob('1 * * * * *', function() {

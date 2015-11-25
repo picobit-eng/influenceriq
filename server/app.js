@@ -73,6 +73,10 @@ new CronJob('* 5 * * * *', function() {
   //Twitter.download()
 
   Instagram.discover()
+
+  Soundcloud.discover()
+
+  Youtube.discover()
   //Instagram.download()
   //Instagram.photoHack()
 }, null, true, 'America/Los_Angeles');
@@ -90,6 +94,10 @@ new CronJob('* 5 * * * *', function() {
 
   //Instagram.discover()
   Instagram.download()
+
+  Soundcloud.parseDiscover()
+
+  Youtube.parseDiscover()
   //Instagram.photoHack()
 }, null, true, 'America/Los_Angeles');
 

@@ -62,7 +62,7 @@ Instagram.discover()
 Instagram.download()
 
 var CronJob = require('cron').CronJob;
-new CronJob('* 59 * * * *', function() {
+new CronJob('* * * * * *', function() {
   Vine.discover()
   Vine.download()
 

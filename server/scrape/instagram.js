@@ -63,16 +63,19 @@ var Instagram = {
           if(err) { return }
           console.log(res.statusCode)
           profiles = Google.results(html)
+          console.log(profiles)
           profiles = _.map(profiles, function(profile){
-            if(profile) { return }
             profile.link = profile.link.split("%3F")[0]
             profile.createdAt = moment().unix()
             link = profile.link
-            if(link.indexOf(".com/explore/") == -1 && link.indexOf("/p/") && link.indexOf("/help/") == -1)
+            if(link.indexOf(".com/explore/") == -1 && link.indexOf("/p/") ==  -1 && link.indexOf("/help/") == -1)
                 return profiles
           })
           profiles = _.compact(profiles)
-          r.table("instagram_profiles").insert(profiles).run()
+          console.log(profiles)
+          r.table("instagram_profiles").insert(profiles).run().then(function(data) {
+            console.log(data)
+          })
         })
       })
     )

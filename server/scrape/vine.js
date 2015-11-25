@@ -35,6 +35,7 @@ var Vine = {
           profile = _this.parseProfile(html)
           profile.createdAt = moment().unix()
           r.table("vine_profile_stats").insert(profile).run().then(function(data) {
+            console.log("insert")
             console.log(data)
           })
           /*
@@ -68,7 +69,7 @@ var Vine = {
     data[ "posts"] = parseInt(posts)
     data["name"] = name
     data["description"] = description
-    console.log(data)
+    //console.log(data)
     return data
   },
 

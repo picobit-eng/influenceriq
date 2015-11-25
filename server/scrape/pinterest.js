@@ -33,6 +33,7 @@ var Pinterest = {
           profile = _this.parseProfile(html)
           profile.createdAt = moment().unix()
           r.table("pinterest_profile_stats").insert(profile).run().then(function(data) {
+            console.log("insert")
             console.log(data)
           })
           /*
@@ -58,7 +59,7 @@ var Pinterest = {
       if(name)
         data[name] = content
     })
-    console.log(data)
+    //console.log(data)
     return data
   },
 

@@ -32,6 +32,7 @@ var Twitter = {
           profile = _this.parseProfile(html)
           profile.createdAt = moment().unix()
           r.table("twitter_profile_stats").insert(profile).run().then(function(data) {
+            console.log("insert")
             console.log(data)
           })
           /*
@@ -57,7 +58,7 @@ var Twitter = {
         final[span] = title
     })
     final["profile_pic"] = $("img.ProfileAvatar-image").attr("src")
-    console.log(final)
+    //console.log(final)
     return final
   },
 

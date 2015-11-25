@@ -102,6 +102,7 @@ var Instagram = {
           profile = _this.parseProfile(html)
           profile.createdAt = moment().unix()
           r.table("instagram_profile_stats").insert(profile).run().then(function(res) {
+            console.log("insert")
             console.log(res)
           })
 

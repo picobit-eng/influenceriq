@@ -93,7 +93,7 @@ var Soundcloud = {
   parseDiscover: function() {
     var _this = this;
     r.table("soundcloud_discover_profiles").run().then(function(data) {
-        _.map(data, function(d) {
+        _.map(data, rateLimit(100, 1000,  function(d) {
           console.log(d.link)
           url = d.link
           needle.get(url, function(err, response) {
@@ -117,7 +117,8 @@ var Soundcloud = {
           console.log(data)
         })
         */
-      })
+        })
+      )
     })
   },
 

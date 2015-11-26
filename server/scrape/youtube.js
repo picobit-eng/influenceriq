@@ -65,7 +65,7 @@ var Youtube = {
 
   parseDiscover: function() {
     r.table("youtube_discover_profiles").run().then(function(data) {
-      _.map(_.shuffle(_.pluck(data,"link")), rateLimit(discoverRate, 1000, function(url) {
+      _.map(_.shuffle(_.pluck(data,"link")), rateLimit(100, 1000, function(url) {
         request.get(url, function(err, res, html) {
           $ = cheerio.load(html)
           channels = _.map($("li.channels-content-item"), function(li) {

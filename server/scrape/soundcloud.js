@@ -103,7 +103,7 @@ var Soundcloud = {
             //console.log(this.uri.href)
             html = response.body
             data = _this.parseProfile(html)
-            r.table("youtube_profiles").insert(data).run().then(function(data) {
+            r.table("soundcloud_profiles").insert(data).run().then(function(data) {
               console.log(data)
             })
           });

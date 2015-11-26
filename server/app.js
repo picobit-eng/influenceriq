@@ -7,6 +7,8 @@ var Vine = require("./scrape/vine")
 var Pinterest = require("./scrape/pinterest")
 var Twitter = require("./scrape/twitter")
 var Crawlera = require("./scrape/crawlera")
+var Youtube = require("./scrape/youtube")
+var Soundcloud = require("./scrape/soundcloud")
 var moment = require("moment")
 var _ = require('underscore')
 var rd = require("./connection").redis()
@@ -53,13 +55,16 @@ app.get('/network/:network/:page', function (req, res) {
 Vine.download()
 
 //Pinterest.discover()
-Pinterest.download()
+//Pinterest.download()
 
 //Twitter.discover()
 Twitter.download()
 
 //Instagram.discover()
 Instagram.download()
+
+Youtube.discover()
+Soundcloud.discover()
 
 var CronJob = require('cron').CronJob;
 new CronJob('* 5 * * * *', function() {

@@ -119,6 +119,6 @@ var Twitter = {
   },
 }
 
-Twitter.download()
+//Twitter.download()
 
 module.exports = Twitter

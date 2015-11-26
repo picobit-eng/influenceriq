@@ -51,6 +51,8 @@ app.get('/network/:network/:page', function (req, res) {
 /*
 */
 
+Soundcloud.parseDiscover()
+Youtube.parseDiscover()
 //Vine.discover()
 Vine.download()
 

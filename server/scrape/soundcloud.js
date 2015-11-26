@@ -73,7 +73,7 @@ var Soundcloud = {
     $ = cheerio.load(html)
     data = {}
     results = _.map($("meta"), function(meta) {
-      console.log($(meta).attr())
+      //console.log($(meta).attr())
       name = $(meta).attr("property")
       //if(name)
       //  name = name.split(":").slice(-1)
@@ -96,7 +96,8 @@ var Soundcloud = {
         _.map(data, function(d) {
           console.log(d.link)
           url = d.link
-          needle.get(url, function(error, response) {
+          needle.get(url, function(err, response) {
+            if(err) { return  }
             console.log(response.statusCode)
             //$ = cheerio.load(response.body)
             //meta = console.log(_.map($("meta"), function(e) { console.log($(e).attr())}))

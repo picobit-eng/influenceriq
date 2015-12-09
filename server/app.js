@@ -51,6 +51,7 @@ app.get('/network/:network/:page', function (req, res) {
 /*
 */
 
+/*
 Soundcloud.parseDiscover()
 Youtube.parseDiscover()
 //Vine.discover()
@@ -109,7 +110,6 @@ new CronJob('* 5 * * * *', function() {
 }, null, true, 'America/Los_Angeles');
 
 
-/*
 new CronJob('1 * * * * *', function() {
   CompanyNameToDomain.start()
 }, null, true, 'America/Los_Angeles');

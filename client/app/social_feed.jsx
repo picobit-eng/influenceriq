@@ -28,7 +28,7 @@ var SideBar = React.createClass({
   <div className="sidebar">
     <div style={{marginTop:20}}>
       <h6 style={{fontWeight:"bold",marginBottom:1}}> 
-        <img src="build/img/home.png" className="" style={{height:20}}/> 
+        <img src="images/social_spark_dark_logo.png" className="" style={{height:20}}/> 
         TRENDING </h6>
       <h6 style={{fontWeight:"bold",marginTop:5}}> 
         <i className="fa fa-bars" style={{paddingLeft:2}}/>&nbsp; LISTS </h6>
@@ -94,11 +94,11 @@ var NavBar = React.createClass({
     return (
       <div className="navbar">
         <div style={{paddingLeft:20, paddingTop:5}}>
-            <img className="app-logo-img" src="build/img/social_spark_dark_logo.png" />
-            <span className="app-logo-text" style={{color:'black'}}>
-            SocialSpark
+            <img className="app-logo-img" src="images/infiq_black.png" style={{paddingTop:17}}/>
+            <span className="app-logo-text" style={{color:'black',fontWeight:800}}>
+            InfluencerIQ
           </span>
-          <div className="search-btn" style={{backgroundImage:'url("build/img/user.png")', backgroundSize:'cover'}}>
+          <div className="search-btn" style={{backgroundImage:'url("images/user.png")', backgroundSize:'cover'}}>
           </div>
 
           <div className="search-btn" onClick={this.signOut}>

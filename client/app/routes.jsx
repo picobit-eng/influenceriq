@@ -6,6 +6,8 @@ var TabbedArea = ReactBootstrap.TabbedArea
 var TabPane = ReactBootstrap.TabPane
 var SplitButton = ReactBootstrap.SplitButton
 var MenuItem= ReactBootstrap.SplitButton
+var Login = require("login")
+var Landing = require("landing_page")
 
 var Route = ReactRouter.Route;
 var RouteHandler = ReactRouter.RouteHandler;
@@ -129,7 +131,7 @@ var OldApp = React.createClass({
 var App = React.createClass({
   render: function() {
     return (
-      <div>
+      <div style={{height:"100%"}}>
         <RouteHandler/>
       </div>
     )
@@ -253,16 +255,6 @@ var Signup = React.createClass({
   }
 })
 
-var Login = React.createClass({
-  render: function() {
-    return (
-      <div>
-        Visualizations
-      </div>
-    )
-  }
-})
-
 var InstagramProfile = React.createClass({
   render: function() {
     return (
@@ -319,6 +311,7 @@ var routes = (
       <Route handler={App}>
         <Route path="" handler={SocialFeed}/>
         <Route path="login" handler={Login}/>
+        <Route path="landing" handler={Landing}/>
         <Route path="signup" handler={Signup}/>
       </Route>
 

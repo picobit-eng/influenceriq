@@ -3448,7 +3448,105 @@ if (jQuery) (function ($) {
 })(jQuery);
 });
 
-require.register("landing_page_concept.js", function(exports, require, module) {
+require.register("landing_page", function(exports, require, module) {
+var LandingPage = React.createClass({displayName: 'LandingPage',
+  home: function() {
+    location.href="/#landing"
+  },
+
+  signUp: function() {
+    data = {}
+    $.ajax({
+      url:location.origin+ "/signup",
+      data: {},
+      dataType:"json",
+      success: function(res) {
+        console.log(res)
+        location.currentUser(res.token)
+      },
+      error: function(err) {
+        console.log(err)
+      }
+    })
+  },
+
+  componentDidMount: function() {
+    $('.form-control').floatlabel({
+      labelClass:"floatingLabel",
+      labelEndTop :"5px"
+    });
+  },
+
+  render: function() {
+    return (
+      React.createElement("div", {style: {height:"100%",color:"white",fontFamily:"proxima-nova",overflow:"hidden"}}, 
+        React.createElement("div", {className: "bg-gradient", style: {height:"100%",position:"relative",zIndex:20}}, 
+          React.createElement("video", {src: "images/D18_9_310_preview.mp4", style: {position:"absolute",width:"100%",top:0,left:0,zIndex:1,opacity:0.1}, 
+                loop: true, autoPlay: true}), 
+        React.createElement("div", {className: "container", style: {position:"relative",zIndex:30,paddingTop:50}}, 
+
+        React.createElement("h4", {style: {fontWeight:800,fontSize:22,cursor:"pointer"}, 
+          onClick: this.home}, 
+          React.createElement("img", {src: "images/infiq_white.png", style: {float:"left",height:25,marginRight:0}}), " " + ' ' +
+          "InfluencerIQ"), 
+
+        React.createElement("span", {style: {float:"right",marginTop:-32,marginRight:200}}, 
+        React.createElement("a", {href: "#pricing", className: "", style: {marginTop:-32,marginRight:30,fontWeight:600,fontSize:12,color:"#fff"}}, "CREATORS"), 
+        React.createElement("a", {href: "#pricing", className: "", style: {marginTop:-32,marginRight:30,fontWeight:600,fontSize:12,color:"#fff"}}, "BRANDS"), 
+        React.createElement("a", {href: "#pricing", className: "", style: {marginTop:-32,marginRight:30,fontWeight:600,fontSize:12,color:"#fff"}}, "ABOUT US"), 
+        React.createElement("a", {href: "#pricing", className: "", style: {marginTop:-32,marginRight:30,fontWeight:600,fontSize:12,color:"#fff"}}, "PRICING")
+        ), 
+
+        React.createElement("a", {href: "#login", className: "btn btn-primary", style: {float:"right",marginTop:-40}}, "LOG IN"), 
+        React.createElement("div", {className: "row", style: {marginTop:40}}, 
+        React.createElement("div", {className: "col-md-6"}, 
+          React.createElement("h1", null, "Join The Leading Marketplace For Social Media Creators"), 
+          React.createElement("br", null), 
+          React.createElement("hr", null), 
+          React.createElement("br", null), 
+          React.createElement("h2", {style: {marginTop:20,fontWeight:100}}, "GAIN ACCESS TO EXCLUSIVE ", React.createElement("br", null), 
+            React.createElement("br", null), 
+            React.createElement("span", {style: {fontStyle:"italic"}}, 
+              React.createElement("span", null, "BRAND PARTNERSHIPS, "), React.createElement("br", null), 
+              React.createElement("span", null, "BRAND BOOKINGS, &"), " ", React.createElement("br", null), 
+              React.createElement("span", null, "PRODUCT PLACEMENTS")
+          )), 
+          React.createElement("span", {style: {display:"none"}}, 
+            React.createElement("input", {type: "text", className: "form-control input-lg", style: {marginTop:30,width:300,borderRadius:2,fontSize:16}, placeholder: "EMAIL"}), 
+            React.createElement("input", {type: "text", className: "form-control input-lg", style: {marginTop:10,width:300,borderRadius:2,fontSize:16}, placeholder: "PASSWORD", type: "password"}), 
+            React.createElement("input", {type: "text", className: "form-control input-lg", style: {marginTop:10,width:300,borderRadius:2,fontSize:16}, placeholder: "CONFIRM PASSWORD", type: "password"}), 
+            React.createElement("a", {className: "btn btn-lg btn-success", style: {marginTop:10,width:150,fontSize:16}}, "SIGN UP")
+          )
+        ), 
+
+        React.createElement("div", {className: "col-md-6", style: {textAlign:"center"}}, 
+          React.createElement("br", null), 
+          React.createElement("br", null), 
+          React.createElement("br", null), 
+          React.createElement("br", null), 
+          React.createElement("br", null), 
+          React.createElement("br", null), 
+          React.createElement("br", null), 
+          React.createElement("img", {src: "images/signaliq.png", style: {display:"none",height:450,float:"left",marginLeft:100,marginTop:20}}), 
+          React.createElement("a", {href: "javascript:", className: "big-btn btn-lg btn btn-primary"}, "I'M A CREATOR  ", React.createElement("i", {className: "fa fa-arrow-right", style: {float:"right"}})), 
+          React.createElement("br", null), 
+          React.createElement("br", null), 
+          React.createElement("a", {href: "javascript:", className: "btn-lg btn btn-primary big-btn"}, "I'M A BRAND   ", React.createElement("i", {className: "fa fa-arrow-right", style: {float:"right"}}))
+        )
+        )
+      )
+      )
+      )
+    )
+  }
+})
+
+
+module.exports = LandingPage
+
+});
+
+;require.register("landing_page_concept.js", function(exports, require, module) {
 /** @jsx React.DOM */
 
 var MarketingFooter = require('./marketing_footer.js.min.js');
@@ -3669,7 +3767,54 @@ module.exports = React.createClass({displayName: 'exports',
 
 });
 
-require.register("marketing_footer.js", function(exports, require, module) {
+require.register("login", function(exports, require, module) {
+var Login = React.createClass({displayName: 'Login',
+  loginUser: function() {
+    data = {}
+    $.ajax({
+      url:location.origin+ "/login",
+      data: {},
+      dataType:"json",
+      // auth token: ""
+      success: function(res) {
+        console.log(res)
+        location.currentUser(res.token)
+        // location.href="/#/signals"
+      },
+      error: function(err) {
+        console.log(err)
+      }
+    })
+  },
+
+  componentDidMount: function() {
+    $('.login-form .form-control').floatlabel({
+      labelClass:"floatingLabel",
+      labelEndTop :"5px"
+    });
+  },
+
+  render: function() {
+    return (
+      React.createElement("div", {style: {width:320,textAlign:"center",paddingTop:120}, className: "col-md-2 col-md-offset-4  login-form"}, 
+          React.createElement("img", {src: "images/radar_2.png", style: {height:100}}), 
+          React.createElement("br", null), 
+        React.createElement("input", {type: "text", className: "form-control input-lg", style: {fontSize:16, marginRight:"auto",marginLeft:"auto",marginTop:30,width:300,borderRadius:2}, placeholder: "EMAIL"}), 
+        React.createElement("input", {className: "form-control input-lg", style: {fontSize:16, marginTop:10,marginLeft:"auto",marginRight:"auto",width:300,borderRadius:2}, placeholder: "PASSWORD", type: "password"}), 
+        React.createElement("br", null), 
+        React.createElement("a", {className: "btn btn-lg btn-primary", 
+          onClick: this.loginUser, 
+          style: {marginTop:10,width:300, fontSize:16}}, "LOG IN")
+      )
+    )
+  }
+})
+
+module.exports = Login
+
+});
+
+;require.register("marketing_footer.js", function(exports, require, module) {
 
 module.exports = React.createClass({displayName: 'exports',
   render: function() {
@@ -5921,6 +6066,8 @@ var TabbedArea = ReactBootstrap.TabbedArea
 var TabPane = ReactBootstrap.TabPane
 var SplitButton = ReactBootstrap.SplitButton
 var MenuItem= ReactBootstrap.SplitButton
+var Login = require("login")
+var Landing = require("landing_page")
 
 var Route = ReactRouter.Route;
 var RouteHandler = ReactRouter.RouteHandler;
@@ -6044,7 +6191,7 @@ var OldApp = React.createClass({displayName: 'OldApp',
 var App = React.createClass({displayName: 'App',
   render: function() {
     return (
-      React.createElement("div", null, 
+      React.createElement("div", {style: {height:"100%"}}, 
         React.createElement(RouteHandler, null)
       )
     )
@@ -6168,16 +6315,6 @@ var Signup = React.createClass({displayName: 'Signup',
   }
 })
 
-var Login = React.createClass({displayName: 'Login',
-  render: function() {
-    return (
-      React.createElement("div", null, 
-        "Visualizations"
-      )
-    )
-  }
-})
-
 var InstagramProfile = React.createClass({displayName: 'InstagramProfile',
   render: function() {
     return (
@@ -6234,6 +6371,7 @@ var routes = (
       React.createElement(Route, {handler: App}, 
         React.createElement(Route, {path: "", handler: SocialFeed}), 
         React.createElement(Route, {path: "login", handler: Login}), 
+        React.createElement(Route, {path: "landing", handler: Landing}), 
         React.createElement(Route, {path: "signup", handler: Signup})
       ), 
 
@@ -6764,7 +6902,7 @@ var SideBar = React.createClass({displayName: 'SideBar',
   React.createElement("div", {className: "sidebar"}, 
     React.createElement("div", {style: {marginTop:20}}, 
       React.createElement("h6", {style: {fontWeight:"bold",marginBottom:1}}, 
-        React.createElement("img", {src: "build/img/home.png", className: "", style: {height:20}}), 
+        React.createElement("img", {src: "images/social_spark_dark_logo.png", className: "", style: {height:20}}), 
         "TRENDING "), 
       React.createElement("h6", {style: {fontWeight:"bold",marginTop:5}}, 
         React.createElement("i", {className: "fa fa-bars", style: {paddingLeft:2}}), "  LISTS ")
@@ -6830,11 +6968,11 @@ var NavBar = React.createClass({displayName: 'NavBar',
     return (
       React.createElement("div", {className: "navbar"}, 
         React.createElement("div", {style: {paddingLeft:20, paddingTop:5}}, 
-            React.createElement("img", {className: "app-logo-img", src: "build/img/social_spark_dark_logo.png"}), 
-            React.createElement("span", {className: "app-logo-text", style: {color:'black'}}, 
-            "SocialSpark"
+            React.createElement("img", {className: "app-logo-img", src: "images/infiq_black.png", style: {paddingTop:17}}), 
+            React.createElement("span", {className: "app-logo-text", style: {color:'black',fontWeight:800}}, 
+            "InfluencerIQ"
           ), 
-          React.createElement("div", {className: "search-btn", style: {backgroundImage:'url("build/img/user.png")', backgroundSize:'cover'}}
+          React.createElement("div", {className: "search-btn", style: {backgroundImage:'url("images/user.png")', backgroundSize:'cover'}}
           ), 
 
           React.createElement("div", {className: "search-btn", onClick: this.signOut}, 

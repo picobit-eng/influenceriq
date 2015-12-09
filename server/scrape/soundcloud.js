@@ -98,7 +98,7 @@ var Soundcloud = {
           url = d.link
           needle.get(url, function(err, response) {
             if(err) { return  }
-            console.log(response.statusCode)
+            //console.log(response.statusCode)
             //$ = cheerio.load(response.body)
             //meta = console.log(_.map($("meta"), function(e) { console.log($(e).attr())}))
             //console.log(this.uri.href)

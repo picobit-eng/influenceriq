@@ -49,16 +49,23 @@ var LandingPage = React.createClass({
         <a href="#login" className="btn btn-primary" style={{float:"right",marginTop:-40}}>LOG IN</a>
         <div className="row" style={{marginTop:40}}>
         <div className="col-md-6" >
-          <h1>Join The Leading Marketplace For Social Media Creators</h1>
-          <br/>
+          <h1>
+            <span>Launch an elite marketing campaign in minutes. </span> <br/>
+            <br/>
+            <span>Leverage social media influencers in your city and around the world</span>
+          </h1>
           <hr/>
           <br/>
-          <h2 style={{marginTop:20,fontWeight:100}}>GAIN ACCESS TO EXCLUSIVE <br/>
+          <h2 style={{marginTop:20,fontWeight:100}}>
+            InfluencerIQ connects you with the top social media influencers and content creators from our vetted talent pool. 
             <br/>
-            <span style={{fontStyle:"italic"}}>
-              <span>BRAND PARTNERSHIPS, </span><br/>
+            <br/>
+              <span style={{fontStyle:"italic"}}>
+            Get a guaranteed price quote in minutes.
+              </span>
+            <span style={{fontStyle:"italic",display:"none"}}>
               <span>BRAND BOOKINGS, &</span> <br/>
-              <span>PRODUCT PLACEMENT OPPORTUNITIES</span>
+              <span>PRODUCT PLACEMENTS</span>
           </span></h2>
           <span style={{display:"none"}}>
             <input type="text" className="form-control input-lg" style={{marginTop:30,width:300,borderRadius:2,fontSize:16}} placeholder="EMAIL"/>
@@ -76,11 +83,15 @@ var LandingPage = React.createClass({
           <br/>
           <br/>
           <br/>
+          <br/>
+          <br/>
+          <br/>
+          <br/>
+          <br/>
           <img src="images/signaliq.png" style={{display:"none",height:450,float:"left",marginLeft:100,marginTop:20}}/>
-          <a href="javascript:" className="big-btn btn-lg btn btn-primary">I'M A CREATOR&nbsp; <i className="fa fa-arrow-right" style={{float:"right"}}/></a>
+          <a href="javascript:" className="big-btn btn-lg btn btn-primary">GET STARTED NOW&nbsp; <i className="fa fa-arrow-right" style={{float:"right"}}/></a>
           <br/>
           <br/>
-          <a href="javascript:"className="btn-lg btn btn-primary big-btn" >I'M A BRAND &nbsp; <i className="fa fa-arrow-right"  style={{float:"right"}}/></a>
         </div>
         </div>
       </div>

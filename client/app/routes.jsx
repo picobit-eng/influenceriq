@@ -8,6 +8,7 @@ var SplitButton = ReactBootstrap.SplitButton
 var MenuItem= ReactBootstrap.SplitButton
 var Login = require("login")
 var Landing = require("landing_page")
+var LandingBrand = require("landing_brand")
 
 var Route = ReactRouter.Route;
 var RouteHandler = ReactRouter.RouteHandler;
@@ -312,6 +313,7 @@ var routes = (
         <Route path="" handler={SocialFeed}/>
         <Route path="login" handler={Login}/>
         <Route path="landing" handler={Landing}/>
+        <Route path="brands" handler={LandingBrand}/>
         <Route path="signup" handler={Signup}/>
       </Route>
 

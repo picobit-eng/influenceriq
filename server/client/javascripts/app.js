@@ -1990,7 +1990,27 @@ module.exports = function(){
 
 });
 
-require.register("checkbox_group", function(exports, require, module) {
+require.register("chat", function(exports, require, module) {
+var Chat = React.createClass({displayName: 'Chat',
+  componentDidMount: function() {
+    //(function(d,s){var js,cjs=d.getElementsByTagName(s)[0];js=d.createElement(s); js.src='//chat.center/javascripts/widget.js'; cjs.parentNode.insertBefore(js,cjs);}(document,'script'));
+    $(".js-change-state").click()
+  },
+  render: function() {
+    return (
+      React.createElement("div", null, 
+      React.createElement("iframe", {src: "https://chat.center/influenceriq", style: {height:"400px"}})
+    )
+
+    )
+  }
+})
+
+module.exports = Chat
+
+});
+
+;require.register("checkbox_group", function(exports, require, module) {
 
 var CheckboxGroup = React.createClass({displayName: 'CheckboxGroup',
   render: function() {
@@ -3557,6 +3577,124 @@ module.exports = LandingPage
 
 });
 
+;require.register("landing_creator", function(exports, require, module) {
+var LandingPage = React.createClass({displayName: 'LandingPage',
+  home: function() {
+    location.href="/#landing"
+  },
+
+  signUp: function() {
+    data = {}
+    $.ajax({
+      url:location.origin+ "/signup",
+      data: {},
+      dataType:"json",
+      success: function(res) {
+        console.log(res)
+        location.currentUser(res.token)
+      },
+      error: function(err) {
+        console.log(err)
+      }
+    })
+  },
+
+  componentDidMount: function() {
+    $('.form-control').floatlabel({
+      labelClass:"floatingLabel",
+      labelEndTop :"5px"
+    });
+  },
+
+  render: function() {
+    return (
+      React.createElement("div", {style: {height:"100%",color:"white",fontFamily:"proxima-nova",overflow:"hidden"}}, 
+        React.createElement("div", {className: "bg-gradient", style: {height:"100%",position:"relative",zIndex:20}}, 
+          React.createElement("video", {src: "images/D18_9_310_preview.mp4", style: {position:"absolute",width:"100%",top:0,left:0,zIndex:1,opacity:0.1}, 
+                loop: true, autoPlay: true}), 
+        React.createElement("div", {className: "container", style: {position:"relative",zIndex:30,paddingTop:50}}, 
+
+        React.createElement("h4", {style: {fontWeight:800,fontSize:22,cursor:"pointer"}, 
+          onClick: this.home}, 
+          React.createElement("img", {src: "images/infiq_white.png", style: {float:"left",height:25,marginRight:0}}), " " + ' ' +
+          "InfluencerIQ"), 
+
+        React.createElement("span", {style: {float:"right",marginTop:-32,marginRight:200}}, 
+        React.createElement("a", {href: "#pricing", className: "", style: {marginTop:-32,marginRight:30,fontWeight:600,fontSize:12,color:"#fff"}}, "CREATORS"), 
+        React.createElement("a", {href: "#pricing", className: "", style: {marginTop:-32,marginRight:30,fontWeight:600,fontSize:12,color:"#fff"}}, "BRANDS"), 
+        React.createElement("a", {href: "#pricing", className: "", style: {marginTop:-32,marginRight:30,fontWeight:600,fontSize:12,color:"#fff"}}, "ABOUT US"), 
+        React.createElement("a", {href: "#pricing", className: "", style: {marginTop:-32,marginRight:30,fontWeight:600,fontSize:12,color:"#fff"}}, "PRICING")
+        ), 
+
+        React.createElement("a", {href: "#login", className: "btn btn-primary", style: {float:"right",marginTop:-40}}, "LOG IN"), 
+        React.createElement("div", {className: "row", style: {marginTop:40}}, 
+        React.createElement("div", {className: "col-md-6"}, 
+          React.createElement("h1", null, 
+            React.createElement("span", null, "Grow your career with the most advanced technology platform built for creators. "), " ", React.createElement("br", null)
+          ), 
+          React.createElement("hr", null), 
+          React.createElement("br", null), 
+          React.createElement("h2", {style: {marginTop:20,fontWeight:100}}, 
+            React.createElement("div", {style: {color:"white"}}, 
+              React.createElement("span", {style: {fontStyle:"italic"}}, "SHOWCASE "), 
+              React.createElement("small", {style: {color:"white",fontWeight:100}}, "WE GIVE YOU TOOLS TO GROW YOUR CAREER AND ENHANCE YOUR PLATFORM"
+              )
+            ), 
+            React.createElement("br", null), 
+            React.createElement("div", {style: {color:"white"}}, 
+              React.createElement("span", {style: {fontStyle:"italic"}}, "GROW "), 
+              React.createElement("small", {style: {color:"white",fontWeight:100}}, "WE GIVE YOU TOOLS TO GROW YOUR CAREER AND ENHANCE YOUR PLATFORM"
+              )
+            ), 
+            React.createElement("br", null), 
+            React.createElement("div", {style: {color:"white"}}, 
+              React.createElement("span", {style: {fontStyle:"italic"}}, "MONETIZE "), 
+              React.createElement("small", {style: {color:"white",fontWeight:100}}, "WE GIVE YOU TOOLS TO GROW YOUR CAREER AND ENHANCE YOUR PLATFORM"
+              )
+            ), 
+            React.createElement("span", {style: {fontStyle:"italic",display:"none"}}, 
+              React.createElement("span", null, "BRAND BOOKINGS, &"), " ", React.createElement("br", null), 
+              React.createElement("span", null, "PRODUCT PLACEMENTS")
+          )), 
+          React.createElement("span", {style: {display:"none"}}, 
+            React.createElement("input", {type: "text", className: "form-control input-lg", style: {marginTop:30,width:300,borderRadius:2,fontSize:16}, placeholder: "EMAIL"}), 
+            React.createElement("input", {type: "text", className: "form-control input-lg", style: {marginTop:10,width:300,borderRadius:2,fontSize:16}, placeholder: "PASSWORD", type: "password"}), 
+            React.createElement("input", {type: "text", className: "form-control input-lg", style: {marginTop:10,width:300,borderRadius:2,fontSize:16}, placeholder: "CONFIRM PASSWORD", type: "password"}), 
+            React.createElement("a", {className: "btn btn-lg btn-success", style: {marginTop:10,width:150,fontSize:16}}, "SIGN UP")
+          )
+        ), 
+
+        React.createElement("div", {className: "col-md-6", style: {textAlign:"center"}}, 
+          React.createElement("br", null), 
+          React.createElement("br", null), 
+          React.createElement("br", null), 
+          React.createElement("br", null), 
+          React.createElement("br", null), 
+          React.createElement("br", null), 
+          React.createElement("br", null), 
+          React.createElement("br", null), 
+          React.createElement("br", null), 
+          React.createElement("br", null), 
+          React.createElement("br", null), 
+          React.createElement("br", null), 
+          React.createElement("img", {src: "images/signaliq.png", style: {display:"none",height:450,float:"left",marginLeft:100,marginTop:20}}), 
+          React.createElement("a", {href: "javascript:", className: "big-btn btn-lg btn btn-primary"}, "GET STARTED NOW  ", React.createElement("i", {className: "fa fa-arrow-right", style: {float:"right"}})), 
+          React.createElement("br", null), 
+          React.createElement("br", null)
+        )
+        )
+      )
+      )
+      )
+    )
+  }
+})
+
+
+module.exports = LandingPage
+
+});
+
 ;require.register("landing_page", function(exports, require, module) {
 var LandingPage = React.createClass({displayName: 'LandingPage',
   home: function() {
@@ -3591,6 +3729,7 @@ var LandingPage = React.createClass({displayName: 'LandingPage',
       React.createElement("div", {style: {height:"100%",color:"white",fontFamily:"proxima-nova",overflow:"hidden"}}, 
         React.createElement("div", {className: "bg-gradient", style: {height:"100%",position:"relative",zIndex:20}}, 
           React.createElement("video", {src: "images/D18_9_310_preview.mp4", style: {position:"absolute",width:"100%",top:0,left:0,zIndex:1,opacity:0.1}, 
+                playbackRate: 2, 
                 loop: true, autoPlay: true}), 
         React.createElement("div", {className: "container", style: {position:"relative",zIndex:30,paddingTop:50}}, 
 
@@ -6178,6 +6317,8 @@ var MenuItem= ReactBootstrap.SplitButton
 var Login = require("login")
 var Landing = require("landing_page")
 var LandingBrand = require("landing_brand")
+var LandingCreator = require("landing_creator")
+var Chat = require("chat")
 
 var Route = ReactRouter.Route;
 var RouteHandler = ReactRouter.RouteHandler;
@@ -6483,7 +6624,9 @@ var routes = (
         React.createElement(Route, {path: "login", handler: Login}), 
         React.createElement(Route, {path: "landing", handler: Landing}), 
         React.createElement(Route, {path: "brands", handler: LandingBrand}), 
-        React.createElement(Route, {path: "signup", handler: Signup})
+        React.createElement(Route, {path: "creator", handler: LandingCreator}), 
+        React.createElement(Route, {path: "signup", handler: Signup}), 
+        React.createElement(Route, {path: "chat", handler: Chat})
       ), 
 
       React.createElement(Route, {handler: AuthenticatedApp}, 

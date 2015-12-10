@@ -31,7 +31,6 @@ var LandingPage = React.createClass({
       <div style={{height:"100%",color:"white",fontFamily:"proxima-nova",overflow:"hidden"}} >
         <div className="bg-gradient" style={{height:"100%",position:"relative",zIndex:20}}>
           <video src="images/D18_9_310_preview.mp4" style={{position:"absolute",width:"100%",top:0,left:0,zIndex:1,opacity:0.1}}
-                playbackRate={2}
                 loop={true} autoPlay={true}/>
         <div className="container" style={{position:"relative",zIndex:30,paddingTop:50}}>
 
@@ -50,16 +49,32 @@ var LandingPage = React.createClass({
         <a href="#login" className="btn btn-primary" style={{float:"right",marginTop:-40}}>LOG IN</a>
         <div className="row" style={{marginTop:40}}>
         <div className="col-md-6" >
-          <h1>Join The Leading Marketplace For Social Media Creators</h1>
-          <br/>
+          <h1>
+            <span>Grow your career with the most advanced technology platform built for creators. </span> <br/>
+          </h1>
           <hr/>
           <br/>
-          <h2 style={{marginTop:20,fontWeight:100}}>GAIN ACCESS TO EXCLUSIVE <br/>
+          <h2 style={{marginTop:20,fontWeight:100}}>
+            <div style={{color:"white"}}>
+              <span style={{fontStyle:"italic"}}>SHOWCASE </span>
+              <small style={{color:"white",fontWeight:100}}>WE GIVE YOU TOOLS TO GROW YOUR CAREER AND ENHANCE YOUR PLATFORM
+              </small>
+            </div>
             <br/>
-            <span style={{fontStyle:"italic"}}>
-              <span>BRAND PARTNERSHIPS, </span><br/>
+            <div style={{color:"white"}}>
+              <span style={{fontStyle:"italic"}}>GROW </span>
+              <small style={{color:"white",fontWeight:100}}>WE GIVE YOU TOOLS TO GROW YOUR CAREER AND ENHANCE YOUR PLATFORM
+              </small>
+            </div>
+            <br/>
+            <div style={{color:"white"}}>
+              <span style={{fontStyle:"italic"}}>MONETIZE </span>
+              <small style={{color:"white",fontWeight:100}}>WE GIVE YOU TOOLS TO GROW YOUR CAREER AND ENHANCE YOUR PLATFORM
+              </small>
+            </div>
+            <span style={{fontStyle:"italic",display:"none"}}>
               <span>BRAND BOOKINGS, &</span> <br/>
-              <span>PRODUCT PLACEMENT OPPORTUNITIES</span>
+              <span>PRODUCT PLACEMENTS</span>
           </span></h2>
           <span style={{display:"none"}}>
             <input type="text" className="form-control input-lg" style={{marginTop:30,width:300,borderRadius:2,fontSize:16}} placeholder="EMAIL"/>
@@ -77,11 +92,15 @@ var LandingPage = React.createClass({
           <br/>
           <br/>
           <br/>
+          <br/>
+          <br/>
+          <br/>
+          <br/>
+          <br/>
           <img src="images/signaliq.png" style={{display:"none",height:450,float:"left",marginLeft:100,marginTop:20}}/>
-          <a href="javascript:" className="big-btn btn-lg btn btn-primary">I'M A CREATOR&nbsp; <i className="fa fa-arrow-right" style={{float:"right"}}/></a>
+          <a href="javascript:" className="big-btn btn-lg btn btn-primary">GET STARTED NOW&nbsp; <i className="fa fa-arrow-right" style={{float:"right"}}/></a>
           <br/>
           <br/>
-          <a href="javascript:"className="btn-lg btn btn-primary big-btn" >I'M A BRAND &nbsp; <i className="fa fa-arrow-right"  style={{float:"right"}}/></a>
         </div>
         </div>
       </div>

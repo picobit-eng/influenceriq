@@ -9,6 +9,8 @@ var MenuItem= ReactBootstrap.SplitButton
 var Login = require("login")
 var Landing = require("landing_page")
 var LandingBrand = require("landing_brand")
+var LandingCreator = require("landing_creator")
+var Chat = require("chat")
 
 var Route = ReactRouter.Route;
 var RouteHandler = ReactRouter.RouteHandler;
@@ -314,7 +316,9 @@ var routes = (
         <Route path="login" handler={Login}/>
         <Route path="landing" handler={Landing}/>
         <Route path="brands" handler={LandingBrand}/>
+        <Route path="creator" handler={LandingCreator}/>
         <Route path="signup" handler={Signup}/>
+        <Route path="chat" handler={Chat}/>
       </Route>
 
       <Route handler={AuthenticatedApp}>

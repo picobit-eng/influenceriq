@@ -10277,7 +10277,17 @@ fieldset[disabled] .datepicker table tr td span.active.disabled:hover.active {
   height: 60px;
   border-bottom: 1px solid #ccc;
   margin-bottom:0px
+  position: fixed;
+  height: 60px;
+  border-bottom: 1px solid #ccc;
+  margin-bottom: 0px;
+  top: 0px;
+  z-index: 100;
+  width: 100%;
+  background-color: white;
+  position: fixed;
 }
+
 .sidebar {
   padding-left:25px;
   width: 230px;
@@ -14882,11 +14892,12 @@ body .ui-tooltip {
 
 html {
   box-sizing: border-box;
-  font-family: 'proxima-nova';
+  font-family: proxima-nova !important;
 }
 html,
 body {
   height: 100% !important;
+  font-family: proxima-nova !important;
 }
 *,
 *:before,
@@ -14895,6 +14906,25 @@ body {
 }
 .bg-gradient {
   background-image: linear-gradient(45deg, #3bf7d1 0%, #02ceff 100%);
+}
+.tile {
+  font-family: proxima-nova;
+  text-align: center;
+  color: #ccc;
+  font-size: 40px;
+  display: inline-block;
+  cursor: pointer;
+  width: 33%;
+  height: 100px;
+}
+.sidebar {
+  position: fixed;
+  left: 0px;
+/* width: 00px; */
+  height: 100%;
+  top: 60px;
+  z-index: 100;
+  background-color: #fff;
 }
 .btn-primary {
   background-color: #0079ff !important;
@@ -15013,6 +15043,14 @@ ul {
   display: inline !important;
   padding-right: 20px;
   color: #bbb;
+}
+.pag-bar {
+  text-align: center;
+  position: fixed;
+  bottom: 0px;
+  left: 100px;
+  width: 100%;
+  background-color: rgba(255,255,255,0.8);
 }
 .header {
   padding-bottom: 35px;

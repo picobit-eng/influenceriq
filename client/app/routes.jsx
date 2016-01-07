@@ -1,6 +1,8 @@
 var DataExplorer = require("table")
 var SocialFeed = require('social_feed');
 var UserDatasetTable = require("user_dataset_table")
+var Connect = require("connect")
+var InstagramProfile = require("instagram_profile")
 
 var TabbedArea = ReactBootstrap.TabbedArea
 var TabPane = ReactBootstrap.TabPane
@@ -132,6 +134,12 @@ var OldApp = React.createClass({
 });
 
 var App = React.createClass({
+  getInitialState: function() {
+    return {
+      authenticated: !!localStorage.currentUser
+    }
+  },
+
   render: function() {
     return (
       <div style={{height:"100%"}}>
@@ -142,12 +150,33 @@ var App = React.createClass({
 });
 
 var AuthenticatedApp = React.createClass({
+  getInitialState: function() {
+    if(!localStorage.currentUser)
+        location.href = "/"
+
+    return {
+      authenticated: !localStorage.currentUser,
+      freeTrialOver:"not loaded"
+    }
+  },
+
   render: function() {
-    return (
-      <div className="" >
-        <RouteHandler/>
-      </div>
-    )
+    if(this.state.authenticated) {
+        location.href = "/"
+
+    }  else if(!this.state.freeTrialOver) {
+        location.href = "/#/free_trial"
+
+    } else {
+        return (
+          <div className="app" >
+            <div className="home-page"> </div>
+            <div className="">
+              <RouteHandler/>
+            </div>
+          </div>
+        )
+    }
   }
 });
 
@@ -258,6 +287,7 @@ var Signup = React.createClass({
   }
 })
 
+/*
 var InstagramProfile = React.createClass({
   render: function() {
     return (
@@ -267,6 +297,7 @@ var InstagramProfile = React.createClass({
     )
   }
 })
+*/
 
 var YoutubeProfile = React.createClass({
   render: function() {
@@ -312,7 +343,7 @@ var FreeTrial  = React.createClass({
 var routes = (
     <Route >
       <Route handler={App}>
-        <Route path="" handler={SocialFeed}/>
+        <Route path="" handler={Landing}/>
         <Route path="login" handler={Login}/>
         <Route path="landing" handler={Landing}/>
         <Route path="brands" handler={LandingBrand}/>
@@ -322,10 +353,11 @@ var routes = (
       </Route>
 
       <Route handler={AuthenticatedApp}>
+        <Route path="connect" handler={Connect} />
         <Route path="dashboard" handler={SocialFeed} />
         <Route path="/network/:network/:page" handler={SocialFeed}/>
         <Route path="/profile/youtube/:id" handler={YoutubeProfile}/>
-        <Route path="/profile/instagram/:id" handler={InstagramProfile}/>
+        <Route path="/instagram/influencer/:id" handler={InstagramProfile}/>
         <Route path="pricing" handler={Pricing}/>
         <Route path="profile" handler={ChoosePlan}/>
         <Route path="free_trial" handler={FreeTrial}/>

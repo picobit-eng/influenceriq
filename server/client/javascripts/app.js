@@ -1991,15 +1991,34 @@ module.exports = function(){
 });
 
 require.register("chat", function(exports, require, module) {
+var Navbar = require("navbar")
+
 var Chat = React.createClass({displayName: 'Chat',
   componentDidMount: function() {
     //(function(d,s){var js,cjs=d.getElementsByTagName(s)[0];js=d.createElement(s); js.src='//chat.center/javascripts/widget.js'; cjs.parentNode.insertBefore(js,cjs);}(document,'script'));
     $(".js-change-state").click()
+    user_data = {}
+    user_data = {
+    app_id: "gi5invhc",
+    name: "Nikola Tesla", // Full name
+    email: "nikola@example.com", // Email address
+    created_at: 1312182000, // unix ts
+    widget: {
+      activator: '#IntercomDefaultWidget'
+    }  
+  }
+    window.Intercom('boot', user_data) 
+    window.Intercom('reattach_activator');
+    //Intercom('show');
+    Intercom('showNewMessage', 'yoyo pre-populated content')
   },
+
   render: function() {
     return (
       React.createElement("div", null, 
-      React.createElement("iframe", {src: "https://chat.center/influenceriq", style: {height:"400px"}})
+      React.createElement(Navbar, null), 
+      React.createElement("iframe", {src: "https://chat.center/influenceriq", style: {height:"400px",display:"none"}}), 
+      React.createElement("div", {id: "IntercomDefaultWidget"})
     )
 
     )
@@ -2029,6 +2048,94 @@ var CheckboxGroup = React.createClass({displayName: 'CheckboxGroup',
 })
 
 module.exports = CheckboxGroup
+
+});
+
+;require.register("connect", function(exports, require, module) {
+var Navbar = require("navbar")
+
+var Connect = React.createClass({displayName: 'Connect',
+  twitterLogin: function() {
+    console.log("twitter")
+    hello('twitter').login()
+  },
+
+  soundcloudLogin: function() {
+    console.log("soundcloud")
+    //hello('soundcloud').login()
+    hello('instagram').login().then(function() {
+        console.log('You are signed in to Facebook');
+    }, function(e) {
+        console.log('Signin error: ' + e.error.message);
+    });
+  },
+
+  componentDidMount: function() {
+
+    hello.on('auth.login', function(auth) {
+      console.log(auth)
+    })
+
+  },
+
+  render: function() {
+    return (
+      React.createElement("div", null, 
+        React.createElement(Navbar, null), 
+        React.createElement("div", {className: "col-md-offset-3 col-md-6", 
+            style: {paddingTop:100,textAlign:"center"}}, 
+          React.createElement("span", {style: {fontSize:20,fontWeight:100}}, 
+            "CONNECT YOUR SOCIAL ACCOUNT"
+          ), 
+            React.createElement("hr", null), 
+          React.createElement("br", null), 
+          React.createElement("div", {className: "tile", 
+              onClick: this.twitterLogin}, 
+            React.createElement("i", {className: "fa fa-twitter", 
+                style: {}}), 
+            React.createElement("div", {style: {fontSize:12}}, " Twitter ")
+          ), 
+
+          React.createElement("div", {className: "tile", 
+              onClick: this.soundcloudLogin}, 
+            React.createElement("i", {className: "fa fa-soundcloud", 
+                style: {}}), 
+            React.createElement("div", {style: {fontSize:12}}, " Soundcloud ")
+          ), 
+
+          React.createElement("div", {className: "tile"}, 
+            React.createElement("i", {className: "fa fa-youtube", 
+                style: {}}), 
+            React.createElement("div", {style: {fontSize:12}}, " Youtube ")
+          ), 
+
+          React.createElement("br", null), 
+          React.createElement("br", null), 
+
+          React.createElement("div", {className: "tile"}, 
+            React.createElement("i", {className: "fa fa-instagram", 
+                style: {}}), 
+            React.createElement("div", {style: {fontSize:12}}, " Instagram ")
+          ), 
+
+          React.createElement("div", {className: "tile"}, 
+            React.createElement("i", {className: "fa fa-pinterest", 
+                style: {}}), 
+            React.createElement("div", {style: {fontSize:12}}, " Pinterest ")
+          ), 
+
+          React.createElement("div", {className: "tile"}, 
+            React.createElement("i", {className: "fa fa-vine", 
+                style: {}}), 
+            React.createElement("div", {style: {fontSize:12}}, " Vine ")
+          )
+        )
+      )
+    )
+  }
+})
+
+module.exports = Connect
 
 });
 
@@ -2439,7 +2546,105 @@ document.addEventListener('DOMContentLoaded', function() {
 
 });
 
-require.register("instagram_row", function(exports, require, module) {
+require.register("instagram_profile", function(exports, require, module) {
+
+var NavBar = require("navbar")
+var SideBar = require("sidebar")
+
+var Panel = ReactBootstrap.Panel
+
+var InstagramProfile = React.createClass({displayName: 'InstagramProfile',
+  render: function() {
+    profile = JSON.parse(localStorage.currentProfile)
+    return (
+      React.createElement("div", {style: {height:'100%'}}, 
+        React.createElement(NavBar, null), 
+          React.createElement(SideBar, null), 
+          React.createElement("div", {className: "col-md-offset-2 col-md-10", style: {overflow:"auto",paddingTop:10,fontFamily:"proxima-nova",backgroundColor:"#f4faff",paddingTop:50,paddingBottom:70,paddingLeft:50}}, 
+          React.createElement("br", null), 
+          React.createElement("div", {className: "col-md-3"}, 
+          React.createElement("img", {src: profile.profile_pic, className: "thumbnail", 
+              style: {width:"100%"}}), 
+          React.createElement("span", null, "@"+profile.username), 
+          React.createElement("h3", null, profile.full_name), 
+          React.createElement("h5", null, profile.biography), 
+          React.createElement("a", {href: "javascript:", style: {display:"block",fontSize:24}, 
+          className: "btn btn-lg btn-primary"}, 
+            "BUY POST"
+          )
+          ), 
+          React.createElement("div", {className: "col-md-9"}, 
+            React.createElement("div", {className: "panel panel-default", style: {display:"none"}}, 
+              React.createElement("div", {className: "panel-heading"}, 
+              "Stats"
+              ), 
+              React.createElement("div", {className: "panel-body"}, 
+              "Stats"
+              )
+            ), 
+
+            React.createElement("div", {className: "row"}, 
+              React.createElement("h3", {style: {marginLeft:20}}, "Audience"), 
+              React.createElement("hr", {style: {marginLeft:20,marginTop:10}}), 
+              React.createElement("div", {className: "col-md-4", style: {textAlign:"center"}}, 
+                React.createElement(Panel, {header: "Followers"}, 
+                  React.createElement("h1", {style: {fontWeight:600,fontSize:50}}, profile.followers)
+                )
+              ), 
+              React.createElement("div", {className: "col-md-4", style: {textAlign:"center"}}, 
+                React.createElement(Panel, {header: "MEDIA VALUE PER POST"}, 
+                  React.createElement("h1", {style: {fontWeight:600,fontSize:50}}, "$"+Math.ceil(profile.followers/99.3))
+                )
+              ), 
+              React.createElement("div", {className: "col-md-4", style: {textAlign:"center"}}, 
+                React.createElement(Panel, {header: "title"}, 
+                  React.createElement("h1", {style: {fontWeight:600,fontSize:50}}, profile.followers)
+                )
+              )
+            ), 
+
+            React.createElement("div", {className: "row"}, 
+              React.createElement("h3", {style: {marginLeft:20}}, "Engagement"), 
+              React.createElement("hr", {style: {marginLeft:20,marginTop:10}}), 
+              React.createElement("div", {className: "col-md-4", style: {textAlign:"center"}}, 
+                React.createElement(Panel, {header: "Like Follower Ratio"}, 
+                  React.createElement("h1", {style: {fontWeight:600,fontSize:50}}, profile.followers)
+                )
+              ), 
+              React.createElement("div", {className: "col-md-4", style: {textAlign:"center"}}, 
+                React.createElement(Panel, {header: "Posts Per Week"}, 
+                  React.createElement("h1", {style: {fontWeight:600,fontSize:50}}, "$"+Math.ceil(profile.followers/101.9))
+                )
+              ), 
+              React.createElement("div", {className: "col-md-4", style: {textAlign:"center"}}, 
+                React.createElement(Panel, {header: "COMMENTS PER POST"}, 
+                  React.createElement("h1", {style: {fontWeight:600,fontSize:50}}, profile.followers)
+                )
+              )
+            ), 
+
+            React.createElement("br", null), 
+            React.createElement("div", {className: "panel panel-default", 
+              style: {display:"none"}}, 
+              React.createElement("div", {className: "panel-heading"}, 
+              "Stats"
+              ), 
+              React.createElement("div", {className: "panel-body"}, 
+              "Stats"
+              )
+            )
+          )
+          )
+      )
+    )
+  }
+})
+
+module.exports = InstagramProfile
+
+});
+
+;require.register("instagram_row", function(exports, require, module) {
 var InstagramRow = React.createClass({displayName: 'InstagramRow',
   render: function() {
     return (
@@ -4178,7 +4383,48 @@ b[c[e].seq]=1,x(c[e].callback,d,c[e].combo,c[e].seq)):g||x(c[e].callback,d,c[e].
 
 });
 
-require.register("papaparse.min", function(exports, require, module) {
+require.register("navbar", function(exports, require, module) {
+var NavBar = React.createClass({displayName: 'NavBar',
+  signOut: function() {
+    localStorage.clear()
+    location.href = "#"
+  },
+  render: function() {
+    return (
+      React.createElement("div", {className: "navbar"}, 
+        React.createElement("div", {style: {paddingLeft:20, paddingTop:5}}, 
+            React.createElement("img", {className: "app-logo-img", src: "images/infiq_black.png", style: {paddingTop:17}}), 
+            React.createElement("span", {className: "app-logo-text", style: {color:'black',fontWeight:800}}, 
+            "InfluencerIQ"
+          ), 
+          React.createElement("div", {className: "search-btn", style: {backgroundImage:'url("images/user.png")', backgroundSize:'cover'}}
+          ), 
+
+          React.createElement("span", {style: {display:"none"}}, 
+          React.createElement("div", {className: "search-btn", onClick: this.signOut}, 
+            React.createElement("i", {className: "fa fa-sign-out"})
+          ), 
+
+          React.createElement("div", {className: "search-btn"}, 
+            React.createElement("i", {className: "fa fa-bell"})
+          ), 
+
+          React.createElement("div", {className: "search-btn"}, 
+            React.createElement("i", {className: "fa fa-search"})
+          )
+          )
+
+        )
+      )
+    )
+  }
+})
+
+module.exports = NavBar
+
+});
+
+;require.register("papaparse.min", function(exports, require, module) {
 /*
  *  Papa Parse
  *    v3.0.1
@@ -6309,6 +6555,8 @@ require.register("routes", function(exports, require, module) {
 var DataExplorer = require("table")
 var SocialFeed = require('social_feed');
 var UserDatasetTable = require("user_dataset_table")
+var Connect = require("connect")
+var InstagramProfile = require("instagram_profile")
 
 var TabbedArea = ReactBootstrap.TabbedArea
 var TabPane = ReactBootstrap.TabPane
@@ -6440,6 +6688,12 @@ var OldApp = React.createClass({displayName: 'OldApp',
 });
 
 var App = React.createClass({displayName: 'App',
+  getInitialState: function() {
+    return {
+      authenticated: !!localStorage.currentUser
+    }
+  },
+
   render: function() {
     return (
       React.createElement("div", {style: {height:"100%"}}, 
@@ -6450,12 +6704,33 @@ var App = React.createClass({displayName: 'App',
 });
 
 var AuthenticatedApp = React.createClass({displayName: 'AuthenticatedApp',
+  getInitialState: function() {
+    if(!localStorage.currentUser)
+        location.href = "/"
+
+    return {
+      authenticated: !localStorage.currentUser,
+      freeTrialOver:"not loaded"
+    }
+  },
+
   render: function() {
-    return (
-      React.createElement("div", {className: ""}, 
-        React.createElement(RouteHandler, null)
-      )
-    )
+    if(this.state.authenticated) {
+        location.href = "/"
+
+    }  else if(!this.state.freeTrialOver) {
+        location.href = "/#/free_trial"
+
+    } else {
+        return (
+          React.createElement("div", {className: "app"}, 
+            React.createElement("div", {className: "home-page"}, " "), 
+            React.createElement("div", {className: ""}, 
+              React.createElement(RouteHandler, null)
+            )
+          )
+        )
+    }
   }
 });
 
@@ -6566,15 +6841,17 @@ var Signup = React.createClass({displayName: 'Signup',
   }
 })
 
-var InstagramProfile = React.createClass({displayName: 'InstagramProfile',
+/*
+var InstagramProfile = React.createClass({
   render: function() {
     return (
-      React.createElement("div", null, 
-        "Visualizations"
-      )
+      <div>
+        Visualizations
+      </div>
     )
   }
 })
+*/
 
 var YoutubeProfile = React.createClass({displayName: 'YoutubeProfile',
   render: function() {
@@ -6620,7 +6897,7 @@ var FreeTrial  = React.createClass({displayName: 'FreeTrial',
 var routes = (
     React.createElement(Route, null, 
       React.createElement(Route, {handler: App}, 
-        React.createElement(Route, {path: "", handler: SocialFeed}), 
+        React.createElement(Route, {path: "", handler: Landing}), 
         React.createElement(Route, {path: "login", handler: Login}), 
         React.createElement(Route, {path: "landing", handler: Landing}), 
         React.createElement(Route, {path: "brands", handler: LandingBrand}), 
@@ -6630,10 +6907,11 @@ var routes = (
       ), 
 
       React.createElement(Route, {handler: AuthenticatedApp}, 
+        React.createElement(Route, {path: "connect", handler: Connect}), 
         React.createElement(Route, {path: "dashboard", handler: SocialFeed}), 
         React.createElement(Route, {path: "/network/:network/:page", handler: SocialFeed}), 
         React.createElement(Route, {path: "/profile/youtube/:id", handler: YoutubeProfile}), 
-        React.createElement(Route, {path: "/profile/instagram/:id", handler: InstagramProfile}), 
+        React.createElement(Route, {path: "/instagram/influencer/:id", handler: InstagramProfile}), 
         React.createElement(Route, {path: "pricing", handler: Pricing}), 
         React.createElement(Route, {path: "profile", handler: ChoosePlan}), 
         React.createElement(Route, {path: "free_trial", handler: FreeTrial})
@@ -6964,6 +7242,92 @@ module.exports = SearchBar
 
 });
 
+;require.register("sidebar", function(exports, require, module) {
+
+var SideBar = React.createClass({displayName: 'SideBar',
+  gotoYoutube: function() {
+    location.href = "#/network/youtube/1"
+  },
+
+  gotoInstagram: function() {
+    location.href = "#/network/instagram/1"
+  },
+
+  render: function() {
+    return (
+  React.createElement("div", {className: "col-md-2 sidebar"}, 
+      React.createElement("span", {style: {display:"none"}}, 
+    React.createElement("div", {style: {marginTop:20}}, 
+      React.createElement("h6", {style: {fontWeight:"bold",marginBottom:1}}, 
+        React.createElement("img", {src: "images/social_spark_dark_logo.png", className: "", style: {height:20}}), 
+        "TRENDING "), 
+      React.createElement("h6", {style: {fontWeight:"bold",marginTop:5}}, 
+        React.createElement("i", {className: "fa fa-bars", style: {paddingLeft:2}}), "  LISTS ")
+    ), 
+    React.createElement("div", null, 
+      React.createElement("h6", {style: {fontWeight:"bold"}}, 
+        React.createElement("i", {className: "fa fa-calendar", style: {paddingLeft:2}}), " " + ' ' + 
+        "CASTING CALLS"
+      )
+    ), 
+    React.createElement("div", null, 
+      React.createElement("h6", {style: {fontWeight:"bold"}}, 
+        React.createElement("i", {className: "fa fa-star", style: {paddingLeft:2}}), "  BOOKINGS"
+      )
+    )
+    ), 
+    React.createElement("div", null, 
+      React.createElement("h6", {style: {fontWeight:"bold"}}, 
+        React.createElement("i", {className: "fa fa-compass", style: {paddingLeft:2}}), " " + ' ' +
+        "EXPLORE"
+      ), 
+      React.createElement("div", {style: {paddingLeft:20,marginTop:10}}, 
+        React.createElement("h6", {onClick: this.gotoInstagram, style: {cursor:"pointer"}}, 
+            React.createElement("i", {className: "fa fa-instagram"}), " Instagram"), 
+        React.createElement("span", {style: {display:"none"}}, 
+        React.createElement("h6", {style: {display:"none"}}, 
+          React.createElement("i", {className: "fa fa-facebook"}), " Facebook"), 
+        React.createElement("h6", null, React.createElement("i", {className: "fa fa-twitter"}), " Twitter"), 
+        React.createElement("h6", null, React.createElement("i", {className: "fa fa-soundcloud"}), " Soundcloud"), 
+        React.createElement("h6", {onClick: this.gotoYoutube, style: {cursor:"pointer"}}, 
+            React.createElement("i", {className: "fa fa-youtube"}), " Youtube"), 
+        React.createElement("h6", null, React.createElement("i", {className: "fa fa-pinterest"}), " Pinterest"), 
+        React.createElement("h6", null, React.createElement("i", {className: "fa fa-vine"}), " Vine"), 
+        React.createElement("h6", {style: {display:"none"}}, 
+          React.createElement("i", {className: "fa fa-twitch"}), " Twitch"), 
+        React.createElement("h6", {style: {display:"none"}}, 
+          React.createElement("i", {className: "fa fa-pinterest"}), " Pinterest")
+        )
+      )
+    ), 
+
+    React.createElement("div", {style: {display:"none"}}, 
+      React.createElement("h6", {style: {fontWeight:"bold"}}, 
+        React.createElement("i", {className: "fa fa-ellipsis-hh", style: {paddingLeft:2}}), " " + ' ' +
+        "Categories"
+      ), 
+      React.createElement("div", {style: {paddingLeft:20,marginTop:10}}, 
+        React.createElement("h6", null, React.createElement("i", {className: "fa fa-v"}), " Music"), 
+        React.createElement("h6", null, React.createElement("i", {className: "fa fa-v"}), " Comedy"), 
+        React.createElement("h6", null, React.createElement("i", {className: "fa fa-v"}), " ", "Film & Entertainment"), 
+        React.createElement("h6", null, React.createElement("i", {className: "fa fa-v"}), " Gaming"), 
+        React.createElement("h6", null, React.createElement("i", {className: "fa fa-v"}), " ", "Beauty & Fashion"), 
+        React.createElement("h6", null, React.createElement("i", {className: "fa fa-v"}), " Automotive"), 
+        React.createElement("h6", null, React.createElement("i", {className: "fa fa-v"}), " Sports"), 
+        React.createElement("h6", null, React.createElement("i", {className: "fa fa-v"}), " ", "How-to & DIY"), 
+        React.createElement("h6", null, React.createElement("i", {className: "fa fa-v"}), " ", "Science & Education"), 
+        React.createElement("h6", null, React.createElement("i", {className: "fa fa-v"}), " ", "Lifestyle")
+      )
+    )
+  )
+    )
+  }
+})
+
+module.exports = SideBar
+
+});
+
 ;require.register("signup.js", function(exports, require, module) {
 /** @jsx React.DOM */
 
@@ -7128,8 +7492,18 @@ module.exports = React.createClass({displayName: 'exports',
 require.register("social_feed", function(exports, require, module) {
 var YoutubeRow = require("youtube_row")
 var InstagramRow = require("instagram_row")
+var NavBar = require("navbar")
+var SideBar = require("sidebar")
+
+var Pagination = ReactBootstrap.Pagination
 
 var SocialFeed = React.createClass({displayName: 'SocialFeed',
+  getInitialState: function() {
+    return {
+      yo: false
+    }
+  },
+
   render: function() {
     console.log(this.props)
     return (
@@ -7142,112 +7516,120 @@ var SocialFeed = React.createClass({displayName: 'SocialFeed',
   }
 })
 
-var SideBar = React.createClass({displayName: 'SideBar',
-  gotoYoutube: function() {
-    location.href = "#/network/youtube/1"
+
+
+var ContentArea = React.createClass({displayName: 'ContentArea',
+  getInitialState: function() {
+    return {
+      page: 1,
+      profiles: []
+    }
   },
 
-  gotoInstagram: function() {
-    location.href = "#/network/instagram/1"
+  getProfiles: function (page) {
+    var _this = this;
+    params = this.props.params
+    network = "instagram"
+    //page = this.state.page
+    if(page)
+      page = page
+    else
+      page = this.props.params.page
+    $.ajax({
+      url: location.origin + "/network/"+network+"/" + page,
+      dataType:"json",
+      success: function(res) {
+        console.log(res)
+        _this.setState({profiles: res})
+      }, 
+      error: function(err) {
+        console.log(err)
+      }
+    })
+  },
+
+  componentWillUpdate: function() {
+    this.getProfiles(this.state.page)
+  },
+
+  componentDidMount: function () {
+    this.getProfiles()
   },
 
   render: function() {
+    profiles = _.range(50)
+    profiles = this.state.profiles
+    cards = _.map(profiles, function(profile, i) {
+      return React.createElement(IGProfileCard, {_id: i, profile: profile})
+    })
+    // <div className="row" style={{height:500,overflow:"auto"}}>
     return (
-  React.createElement("div", {className: "sidebar"}, 
-    React.createElement("div", {style: {marginTop:20}}, 
-      React.createElement("h6", {style: {fontWeight:"bold",marginBottom:1}}, 
-        React.createElement("img", {src: "images/social_spark_dark_logo.png", className: "", style: {height:20}}), 
-        "TRENDING "), 
-      React.createElement("h6", {style: {fontWeight:"bold",marginTop:5}}, 
-        React.createElement("i", {className: "fa fa-bars", style: {paddingLeft:2}}), "  LISTS ")
-    ), 
-    React.createElement("div", null, 
-      React.createElement("h6", {style: {fontWeight:"bold"}}, 
-        React.createElement("i", {className: "fa fa-calendar", style: {paddingLeft:2}}), "  EVENTS"
-      )
-    ), 
-    React.createElement("div", null, 
-      React.createElement("h6", {style: {fontWeight:"bold"}}, 
-        React.createElement("i", {className: "fa fa-star", style: {paddingLeft:2}}), "  BOOKINGS"
-      )
-    ), 
-    React.createElement("div", null, 
-      React.createElement("h6", {style: {fontWeight:"bold"}}, 
-        React.createElement("i", {className: "fa fa-compass", style: {paddingLeft:2}}), " " + ' ' +
-        "EXPLORE"
-      ), 
-      React.createElement("div", {style: {paddingLeft:20,marginTop:10}}, 
-        React.createElement("h6", null, React.createElement("i", {className: "fa fa-facebook"}), " Facebook"), 
-        React.createElement("h6", null, React.createElement("i", {className: "fa fa-twitter"}), " Twitter"), 
-        React.createElement("h6", null, React.createElement("i", {className: "fa fa-soundcloud"}), " Soundcloud"), 
-        React.createElement("h6", {onClick: this.gotoYoutube, style: {cursor:"pointer"}}, 
-            React.createElement("i", {className: "fa fa-youtube"}), " Youtube"), 
-        React.createElement("h6", {onClick: this.gotoInstagram, style: {cursor:"pointer"}}, 
-            React.createElement("i", {className: "fa fa-instagram"}), " Instagram"), 
-        React.createElement("h6", null, React.createElement("i", {className: "fa fa-pinterest"}), " Pinterest"), 
-        React.createElement("h6", null, React.createElement("i", {className: "fa fa-vine"}), " Vine"), 
-        React.createElement("h6", null, React.createElement("i", {className: "fa fa-pinterest"}), " Pinterest"), 
-        React.createElement("h6", null, React.createElement("i", {className: "fa fa-twitch"}), " Twitch")
-      )
-    ), 
-    React.createElement("div", null, 
-      React.createElement("h6", {style: {fontWeight:"bold"}}, 
-        React.createElement("i", {className: "fa fa-ellipsis-hh", style: {paddingLeft:2}}), " " + ' ' +
-        "Categories"
-      ), 
-      React.createElement("div", {style: {paddingLeft:20,marginTop:10}}, 
-        React.createElement("h6", null, React.createElement("i", {className: "fa fa-v"}), " Music"), 
-        React.createElement("h6", null, React.createElement("i", {className: "fa fa-v"}), " Comedy"), 
-        React.createElement("h6", null, React.createElement("i", {className: "fa fa-v"}), " ", "Film & Entertainment"), 
-        React.createElement("h6", null, React.createElement("i", {className: "fa fa-v"}), " Gaming"), 
-        React.createElement("h6", null, React.createElement("i", {className: "fa fa-v"}), " ", "Beauty & Fashion"), 
-        React.createElement("h6", null, React.createElement("i", {className: "fa fa-v"}), " Automotive"), 
-        React.createElement("h6", null, React.createElement("i", {className: "fa fa-v"}), " Sports"), 
-        React.createElement("h6", null, React.createElement("i", {className: "fa fa-v"}), " ", "How-to & DIY"), 
-        React.createElement("h6", null, React.createElement("i", {className: "fa fa-v"}), " ", "Science & Education"), 
-        React.createElement("h6", null, React.createElement("i", {className: "fa fa-v"}), " ", "Lifestyle")
+      React.createElement("div", {className: "col-md-offset-2 col-md-10", style: {overflow:"auto",paddingTop:10,fontFamily:"proxima-nova",backgroundColor:"#f4faff",paddingTop:50,paddingBottom:70,paddingLeft:50}}, 
+      
+        React.createElement("br", null), " ", cards, 
+        React.createElement("nav", {style: {textAlign:"center"}, className: "pag-bar"}, 
+
+          React.createElement(Pagination, {
+            prev: true, 
+            next: true, 
+            first: true, 
+            last: true, 
+            ellipsis: true, 
+            items: 20, 
+            maxButtons: 5, 
+            activePage: this.state.page, 
+            onSelect: this.handleSelect})
+
+        )
       )
     )
-  )
-    )
-  }
+  },
+
+  handleSelect:function(event, selectedEvent) {
+    location.href="/#/network/instagram/"+selectedEvent.eventKey
+    this.setState({
+      page: selectedEvent.eventKey
+    });
+  },
 })
 
-var NavBar = React.createClass({displayName: 'NavBar',
-  signOut: function() {
-    localStorage.clear()
-    location.href = "#"
+var IGProfileCard = React.createClass({displayName: 'IGProfileCard',
+  gotoProfile: function() {
+    console.log(this.props._id)
+    profile = this.props.profile
+    location.href = "/#/instagram/influencer/" + profile.username
+    localStorage.currentProfile = JSON.stringify(this.props.profile)
+    console.log(this.props.profile)
   },
+
   render: function() {
+    img = "https://pbs.twimg.com/profile_images/603723595710251009/qOHwpwt8_200x200.jpg" 
+    profile = this.props.profile
+    img = (profile.profile_pic) ? profile.profile_pic_url : img
+    followers = (profile.followers) ? profile.followers : 2341234
+
     return (
-      React.createElement("div", {className: "navbar"}, 
-        React.createElement("div", {style: {paddingLeft:20, paddingTop:5}}, 
-            React.createElement("img", {className: "app-logo-img", src: "images/infiq_black.png", style: {paddingTop:17}}), 
-            React.createElement("span", {className: "app-logo-text", style: {color:'black',fontWeight:800}}, 
-            "InfluencerIQ"
+      React.createElement("div", {style: {display:"inline-block",cursor:"pointer"}, 
+          onClick: this.gotoProfile}, 
+        React.createElement("div", {className: "panel panel-default", style: {width:100, marginLeft:50}}, 
+          React.createElement("div", {className: "panel-heading", 
+            style: {display:"none"}}, "Timothy Delaghetto"), 
+          React.createElement("div", {style: {backgroundImage:"url('"+img+"')",height:100,backgroundSize:"cover"}}
           ), 
-          React.createElement("div", {className: "search-btn", style: {backgroundImage:'url("images/user.png")', backgroundSize:'cover'}}
-          ), 
-
-          React.createElement("div", {className: "search-btn", onClick: this.signOut}, 
-            React.createElement("i", {className: "fa fa-sign-out"})
-          ), 
-
-          React.createElement("div", {className: "search-btn"}, 
-            React.createElement("i", {className: "fa fa-bell"})
-          ), 
-
-          React.createElement("div", {className: "search-btn"}, 
-            React.createElement("i", {className: "fa fa-search"})
+          React.createElement("div", {className: "panel-footer", 
+            style: {fontWeight:"bold",fontSize:11,textAlign:"center"}}, 
+            React.createElement("i", {className: "fa fa-instagram"}), "   ", followers, 
+            React.createElement("a", {href: "javascript:", className: "btn btn-primary btn-xs", 
+              style: {fontSize:11,display:"block",width:"119%",marginRight:-15}}, 
+              React.createElement("i", {className: "fa fa-plus-circle", style: {marginRight:5}}), 
+              "BUY POST")
           )
-
         )
       )
     )
   }
 })
-
-var ContentArea = React.createClass({displayName: 'ContentArea',
+var TableContentArea = React.createClass({displayName: 'TableContentArea',
   getInitialState: function() {
     return {
       page: 1,
@@ -7258,8 +7640,10 @@ var ContentArea = React.createClass({displayName: 'ContentArea',
   componentDidMount: function () {
     var _this = this;
     params = this.props.params
+    network = "instagram"
+    page = this.state.page
     $.ajax({
-      url: location.origin + "/network/"+params.network+"/" + params.page,
+      url: location.origin + "/network/"+network+"/" + page,
       dataType:"json",
       success: function(res) {
         console.log(res)
@@ -7273,7 +7657,9 @@ var ContentArea = React.createClass({displayName: 'ContentArea',
 
   render: function() {
     var _this = this;
-    rows = _.map(this.state.profiles, function(row) {
+    profiles = this.state.profiles
+    profiles = _.range(10)
+    rows = _.map(profiles, function(row) {
       if(_this.props.params.network = "youtube")
         return (React.createElement(YoutubeRow, {row: row}) )
       else if(_this.props.params.network = "instagram")
@@ -7302,23 +7688,7 @@ var ContentArea = React.createClass({displayName: 'ContentArea',
         ), 
 
         React.createElement("nav", {style: {textAlign:"center"}}, 
-          React.createElement("ul", {className: "pagination"}, 
-            React.createElement("li", null, 
-              React.createElement("a", {href: "#", 'aria-label': "Previous"}, 
-                React.createElement("span", {'aria-hidden': "true"}, "«")
-              )
-            ), 
-            React.createElement("li", null, React.createElement("a", {href: "#"}, "1")), 
-            React.createElement("li", null, React.createElement("a", {href: "#"}, "2")), 
-            React.createElement("li", null, React.createElement("a", {href: "#"}, "3")), 
-            React.createElement("li", null, React.createElement("a", {href: "#"}, "4")), 
-            React.createElement("li", null, React.createElement("a", {href: "#"}, "5")), 
-            React.createElement("li", null, 
-              React.createElement("a", {href: "#", 'aria-label': "Next"}, 
-                React.createElement("span", {'aria-hidden': "true"}, "»")
-              )
-            )
-          )
+        React.createElement(PaginationAdvanced, null)
         )
       )
     )
@@ -7373,6 +7743,8 @@ var OldContentArea = React.createClass({displayName: 'OldContentArea',
 ), 
         
 
+        React.createElement(PaginationAdvanced, null), 
+
         React.createElement("nav", {style: {textAlign:"center"}}, 
           React.createElement("ul", {className: "pagination"}, 
             React.createElement("li", null, 
@@ -7400,6 +7772,35 @@ var OldContentArea = React.createClass({displayName: 'OldContentArea',
     )
   }
 })
+
+const PaginationAdvanced = React.createClass({displayName: 'PaginationAdvanced',
+  getInitialState:function() {
+    return {
+      activePage: 1
+    };
+  },
+
+  handleSelect:function(event, selectedEvent) {
+    this.setState({
+      activePage: selectedEvent.eventKey
+    });
+  },
+
+  render:function() {
+    return (
+      React.createElement(Pagination, {
+        prev: true, 
+        next: true, 
+        first: true, 
+        last: true, 
+        ellipsis: true, 
+        items: 20, 
+        maxButtons: 5, 
+        activePage: this.state.activePage, 
+        onSelect: this.handleSelect})
+    );
+  }
+});
 
 module.exports = SocialFeed
 

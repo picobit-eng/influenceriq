@@ -1,7 +1,17 @@
 var YoutubeRow = require("youtube_row")
 var InstagramRow = require("instagram_row")
+var NavBar = require("navbar")
+var SideBar = require("sidebar")
+
+var Pagination = ReactBootstrap.Pagination
 
 var SocialFeed = React.createClass({
+  getInitialState: function() {
+    return {
+      yo: false
+    }
+  },
+
   render: function() {
     console.log(this.props)
     return (
@@ -14,112 +24,120 @@ var SocialFeed = React.createClass({
   }
 })
 
-var SideBar = React.createClass({
-  gotoYoutube: function() {
-    location.href = "#/network/youtube/1"
+
+
+var ContentArea = React.createClass({
+  getInitialState: function() {
+    return {
+      page: 1,
+      profiles: []
+    }
   },
 
-  gotoInstagram: function() {
-    location.href = "#/network/instagram/1"
+  getProfiles: function (page) {
+    var _this = this;
+    params = this.props.params
+    network = "instagram"
+    //page = this.state.page
+    if(page)
+      page = page
+    else
+      page = this.props.params.page
+    $.ajax({
+      url: location.origin + "/network/"+network+"/" + page,
+      dataType:"json",
+      success: function(res) {
+        console.log(res)
+        _this.setState({profiles: res})
+      }, 
+      error: function(err) {
+        console.log(err)
+      }
+    })
+  },
+
+  componentWillUpdate: function() {
+    this.getProfiles(this.state.page)
+  },
+
+  componentDidMount: function () {
+    this.getProfiles()
   },
 
   render: function() {
+    profiles = _.range(50)
+    profiles = this.state.profiles
+    cards = _.map(profiles, function(profile, i) {
+      return <IGProfileCard _id={i} profile={profile}/>
+    })
+    // <div className="row" style={{height:500,overflow:"auto"}}>
     return (
-  <div className="sidebar">
-    <div style={{marginTop:20}}>
-      <h6 style={{fontWeight:"bold",marginBottom:1}}> 
-        <img src="images/social_spark_dark_logo.png" className="" style={{height:20}}/> 
-        TRENDING </h6>
-      <h6 style={{fontWeight:"bold",marginTop:5}}> 
-        <i className="fa fa-bars" style={{paddingLeft:2}}/>&nbsp; LISTS </h6>
-    </div>
-    <div >
-      <h6 style={{fontWeight:"bold"}}>
-        <i className="fa fa-calendar" style={{paddingLeft:2}}/>&nbsp; EVENTS
-      </h6>
-    </div>
-    <div >
-      <h6 style={{fontWeight:"bold"}}>
-        <i className="fa fa-star" style={{paddingLeft:2}}/>&nbsp; BOOKINGS
-      </h6>
-    </div>
-    <div >
-      <h6 style={{fontWeight:"bold"}}>
-        <i className="fa fa-compass" style={{paddingLeft:2}}/>&nbsp;
-        EXPLORE
-      </h6>
-      <div style={{paddingLeft:20,marginTop:10}}>
-        <h6><i className="fa fa-facebook"/>&nbsp;Facebook</h6>
-        <h6><i className="fa fa-twitter"/>&nbsp;Twitter</h6>
-        <h6><i className="fa fa-soundcloud"/>&nbsp;Soundcloud</h6>
-        <h6 onClick={this.gotoYoutube} style={{cursor:"pointer"}}>
-            <i className="fa fa-youtube"/>&nbsp;Youtube</h6>
-        <h6 onClick={this.gotoInstagram} style={{cursor:"pointer"}}>
-            <i className="fa fa-instagram"/>&nbsp;Instagram</h6>
-        <h6><i className="fa fa-pinterest"/>&nbsp;Pinterest</h6>
-        <h6><i className="fa fa-vine"/>&nbsp;Vine</h6>
-        <h6><i className="fa fa-pinterest"/>&nbsp;Pinterest</h6>
-        <h6><i className="fa fa-twitch"/>&nbsp;Twitch</h6>
+      <div className="col-md-offset-2 col-md-10" style={{overflow:"auto",paddingTop:10,fontFamily:"proxima-nova",backgroundColor:"#f4faff",paddingTop:50,paddingBottom:70,paddingLeft:50}}>
+      
+        <br/> {cards}
+        <nav style={{textAlign:"center"}} className="pag-bar">
+
+          <Pagination
+            prev
+            next
+            first
+            last
+            ellipsis
+            items={20}
+            maxButtons={5}
+            activePage={this.state.page}
+            onSelect={this.handleSelect} />
+
+        </nav>
       </div>
-    </div>
-    <div >
-      <h6 style={{fontWeight:"bold"}}>
-        <i className="fa fa-ellipsis-hh" style={{paddingLeft:2}}/>&nbsp;
-        Categories
-      </h6>
-      <div style={{paddingLeft:20,marginTop:10}}>
-        <h6><i className="fa fa-v"/>&nbsp;Music</h6>
-        <h6><i className="fa fa-v"/>&nbsp;Comedy</h6>
-        <h6><i className="fa fa-v"/>&nbsp;{"Film & Entertainment"}</h6>
-        <h6><i className="fa fa-v"/>&nbsp;Gaming</h6>
-        <h6><i className="fa fa-v"/>&nbsp;{"Beauty & Fashion"}</h6>
-        <h6><i className="fa fa-v"/>&nbsp;Automotive</h6>
-        <h6><i className="fa fa-v"/>&nbsp;Sports</h6>
-        <h6><i className="fa fa-v"/>&nbsp;{"How-to & DIY"}</h6>
-        <h6><i className="fa fa-v"/>&nbsp;{"Science & Education"}</h6>
-        <h6><i className="fa fa-v"/>&nbsp;{"Lifestyle"}</h6>
-      </div>
-    </div>
-  </div>
     )
-  }
+  },
+
+  handleSelect(event, selectedEvent) {
+    location.href="/#/network/instagram/"+selectedEvent.eventKey
+    this.setState({
+      page: selectedEvent.eventKey
+    });
+  },
 })
 
-var NavBar = React.createClass({
-  signOut: function() {
-    localStorage.clear()
-    location.href = "#"
+var IGProfileCard = React.createClass({
+  gotoProfile: function() {
+    console.log(this.props._id)
+    profile = this.props.profile
+    location.href = "/#/instagram/influencer/" + profile.username
+    localStorage.currentProfile = JSON.stringify(this.props.profile)
+    console.log(this.props.profile)
   },
+
   render: function() {
+    img = "https://pbs.twimg.com/profile_images/603723595710251009/qOHwpwt8_200x200.jpg" 
+    profile = this.props.profile
+    img = (profile.profile_pic) ? profile.profile_pic_url : img
+    followers = (profile.followers) ? profile.followers : 2341234
+
     return (
-      <div className="navbar">
-        <div style={{paddingLeft:20, paddingTop:5}}>
-            <img className="app-logo-img" src="images/infiq_black.png" style={{paddingTop:17}}/>
-            <span className="app-logo-text" style={{color:'black',fontWeight:800}}>
-            InfluencerIQ
-          </span>
-          <div className="search-btn" style={{backgroundImage:'url("images/user.png")', backgroundSize:'cover'}}>
+      <div style={{display:"inline-block",cursor:"pointer"}}
+          onClick={this.gotoProfile}>
+        <div className="panel panel-default" style={{width:100, marginLeft:50}}>
+          <div className="panel-heading"
+            style={{display:"none"}}>Timothy Delaghetto</div>
+          <div style={{backgroundImage:"url('"+img+"')",height:100,backgroundSize:"cover"}}>
           </div>
-
-          <div className="search-btn" onClick={this.signOut}>
-            <i className="fa fa-sign-out" />
+          <div className="panel-footer"
+            style={{fontWeight:"bold",fontSize:11,textAlign:"center"}}>
+            <i className="fa fa-instagram" /> &nbsp; {followers}
+            <a href="javascript:" className="btn btn-primary btn-xs"
+              style={{fontSize:11,display:"block",width:"119%",marginRight:-15}}>
+              <i className="fa fa-plus-circle" style={{marginRight:5}}/>
+              BUY POST</a>
           </div>
-
-          <div className="search-btn">
-            <i className="fa fa-bell" />
-          </div>
-
-          <div className="search-btn">
-            <i className="fa fa-search" />
-          </div>
-
         </div>
       </div>
     )
   }
 })
-
-var ContentArea = React.createClass({
+var TableContentArea = React.createClass({
   getInitialState: function() {
     return {
       page: 1,
@@ -130,8 +148,10 @@ var ContentArea = React.createClass({
   componentDidMount: function () {
     var _this = this;
     params = this.props.params
+    network = "instagram"
+    page = this.state.page
     $.ajax({
-      url: location.origin + "/network/"+params.network+"/" + params.page,
+      url: location.origin + "/network/"+network+"/" + page,
       dataType:"json",
       success: function(res) {
         console.log(res)
@@ -145,7 +165,9 @@ var ContentArea = React.createClass({
 
   render: function() {
     var _this = this;
-    rows = _.map(this.state.profiles, function(row) {
+    profiles = this.state.profiles
+    profiles = _.range(10)
+    rows = _.map(profiles, function(row) {
       if(_this.props.params.network = "youtube")
         return (<YoutubeRow row={row}/> )
       else if(_this.props.params.network = "instagram")
@@ -174,23 +196,7 @@ var ContentArea = React.createClass({
         </div>
 
         <nav style={{textAlign:"center"}}>
-          <ul className="pagination">
-            <li>
-              <a href="#" aria-label="Previous">
-                <span aria-hidden="true">&laquo;</span>
-              </a>
-            </li>
-            <li><a href="#">1</a></li>
-            <li><a href="#">2</a></li>
-            <li><a href="#">3</a></li>
-            <li><a href="#">4</a></li>
-            <li><a href="#">5</a></li>
-            <li>
-              <a href="#" aria-label="Next">
-                <span aria-hidden="true">&raquo;</span>
-              </a>
-            </li>
-          </ul>
+        <PaginationAdvanced />
         </nav>
       </div>
     )
@@ -245,6 +251,8 @@ var OldContentArea = React.createClass({
 </div>
         
 
+        <PaginationAdvanced />
+
         <nav style={{textAlign:"center"}}>
           <ul className="pagination">
             <li>
@@ -272,5 +280,34 @@ var OldContentArea = React.createClass({
     )
   }
 })
+
+const PaginationAdvanced = React.createClass({
+  getInitialState() {
+    return {
+      activePage: 1
+    };
+  },
+
+  handleSelect(event, selectedEvent) {
+    this.setState({
+      activePage: selectedEvent.eventKey
+    });
+  },
+
+  render() {
+    return (
+      <Pagination
+        prev
+        next
+        first
+        last
+        ellipsis
+        items={20}
+        maxButtons={5}
+        activePage={this.state.activePage}
+        onSelect={this.handleSelect} />
+    );
+  }
+});
 
 module.exports = SocialFeed

@@ -3,16 +3,37 @@
 
 html
   box-sizing: border-box
-  font-family: 'proxima-nova'
+  font-family: proxima-nova !important
 
 html, body
   height:100% !important
+  font-family: proxima-nova !important
 
 *, *:before, *:after
   box-sizing: inherit
 
 .bg-gradient
   background-image: linear-gradient(45deg, rgb(59, 247, 209) 0%, rgb(2, 206, 255) 100%);
+
+.tile
+  font-family:proxima-nova
+  text-align:center
+  color:#ccc
+  font-size:40px
+  display:inline-block
+  cursor:pointer
+  width:33%
+  height:100px
+
+.sidebar
+  position: fixed;
+  left: 0px;
+  /* width: 00px; */
+  height: 100%;
+  top: 60px;
+  z-index: 100;
+  background-color: white;
+
 
 .btn-primary
   background-color:#0079ff !important
@@ -124,6 +145,13 @@ ul
     padding-right:20px
     color:#bbbbbb
   
+.pag-bar
+  text-align: center;
+  position: fixed;
+  bottom: 0px;
+  left: 100px;
+  width: 100%;
+  background-color: rgba(255,255,255,0.8);
 
 .header
   padding-bottom:35px

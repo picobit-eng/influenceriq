@@ -242,5 +242,5 @@ var Instagram = {
 
 //Instagram.discover()
 //Instagram.batchDownload()
-Instagram.download()
+//Instagram.download()
 module.exports = Instagram

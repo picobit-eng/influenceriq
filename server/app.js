@@ -21,11 +21,18 @@ app.get('/', function (req, res) {
   res.sendfile("client/index.html");
 });
 
+app.get('/redirect', function (req, res) {
+  res.send('Hello World!');
+});
+
 app.get('/test', function (req, res) {
   res.send('Hello World!');
 });
 
+
+/* Old One */
 app.get('/network/:network/:page', function (req, res) {
+  console.log("first")
   page = parseInt(req.params.page)
   if(req.params.network == "instagram")
     thing = "followers"
@@ -41,79 +48,25 @@ app.get('/network/:network/:page', function (req, res) {
   })
 });
 
-//Instagram.discover()
-//Instagram.download()
-//Pinterest.discover()
-//Pinterest.download()
-//Twitter.discover()
-//Twitter.download()
-//ChangeFeeds.start()
 /*
-*/
+app.get('/network/:network/:page', function (req, res) {
+  console.log("second")
+  page = parseInt(req.params.page)
+  if(req.params.network == "instagram")
+    thing = "followers"
+  else if(req.params.network == "youtube")
+    thing = "subs"
 
-/*
-Soundcloud.parseDiscover()
-Youtube.parseDiscover()
-//Vine.discover()
-Vine.download()
-
-//Pinterest.discover()
-//Pinterest.download()
-
-//Twitter.discover()
-Twitter.download()
-
-//Instagram.discover()
-Instagram.download()
-
-Youtube.discover()
-Soundcloud.discover()
-
-var CronJob = require('cron').CronJob;
-new CronJob('* 5 * * * *', function() {
-  Vine.discover()
-  //Vine.download()
-
-  Pinterest.discover()
-  //Pinterest.download()
-
-  Twitter.discover()
-  //Twitter.download()
-
-  Instagram.discover()
-
-  Soundcloud.discover()
-
-  Youtube.discover()
-  //Instagram.download()
-  //Instagram.photoHack()
-}, null, true, 'America/Los_Angeles');
-
-var CronJob = require('cron').CronJob;
-new CronJob('* 5 * * * *', function() {
-  //Vine.discover()
-  Vine.download()
-
-  //Pinterest.discover()
-  Pinterest.download()
-
-  //Twitter.discover()
-  Twitter.download()
-
-  //Instagram.discover()
-  Instagram.download()
-
-  Soundcloud.parseDiscover()
-
-  Youtube.parseDiscover()
-  //Instagram.photoHack()
-}, null, true, 'America/Los_Angeles');
-
-
-new CronJob('1 * * * * *', function() {
-  CompanyNameToDomain.start()
-}, null, true, 'America/Los_Angeles');
-
+  qry = r.table(req.params.network+"_profiles").orderBy({index:r.desc(thing)})
+  qry = qry.distinct({index: thing})
+  page_size = 100
+  ids = qry.slice(page*page_size, (page+1)*page_size).limit(page_size).run().then(function(ids) {
+    console.log(ids)
+    r.table(req.params.network+"_profiles").getAll(r.args(ids), {index: thing}).then(function(data) {
+      return res.send(data);
+    })
+  })
+});
 */
 
 var server = app.listen(process.env.WEB_PORT || 3000, function () {

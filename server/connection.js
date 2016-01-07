@@ -12,8 +12,8 @@ module.exports = {
 
   rethinkdb: function() {
     if(process.env.DEBUG) {
-      data = {authKey:"PPxYaDVvVmDhXccvM2qdGzFhyIdwcLpYSuyGIbTFD5c", db:"socialiq"}
-      //data = {db:"socialiq"}
+      //data = {authKey:"PPxYaDVvVmDhXccvM2qdGzFhyIdwcLpYSuyGIbTFD5c", db:"socialiq"}
+      data = {db:"socialiq"}
       var r = require('rethinkdbdash')(data);
     } else {
       var r = require('rethinkdbdash')({
